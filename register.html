@@ -1,0 +1,2758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeva Medical Centre - Patient Form</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#111;
+}
+
+body{
+    background:#edf4f8;
+    padding:15px;
+}
+
+.container{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+}
+
+/* =========================
+   REGISTRATION PANEL
+========================= */
+
+.registration-panel{
+    background:#fff;
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+.registration-panel h2{
+    margin:0 0 15px;
+    text-align:center;
+    color:#0757b8;
+    font-size:23px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+}
+
+.field label{
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:4px;
+}
+
+.field input,
+.field select{
+    height:38px;
+    border:1px solid #888;
+    border-radius:5px;
+    padding:7px 9px;
+    font-size:14px;
+}
+
+.field input:focus,
+.field select:focus{
+    outline:none;
+    border:2px solid #0757b8;
+}
+
+.buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:15px;
+}
+
+button{
+    border:none;
+    border-radius:5px;
+    padding:10px 16px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.save-btn{
+    background:#138a3d;
+    color:#fff;
+}
+
+.print-btn{
+    background:#0757b8;
+    color:#fff;
+}
+
+.clear-btn{
+    background:#555;
+    color:#fff;
+}
+
+.load-btn{
+    background:#0757b8;
+    color:#fff;
+}
+
+.delete-btn{
+    background:#c62828;
+    color:#fff;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-panel{
+    background:#fff;
+    padding:15px;
+    margin-bottom:18px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+
+.search-panel h3{
+    margin:0 0 10px;
+    color:#0757b8;
+}
+
+.search-box{
+    width:100%;
+    height:40px;
+    padding:8px 10px;
+    border:1px solid #888;
+    border-radius:5px;
+    font-size:14px;
+}
+
+.search-result{
+    margin-top:8px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    padding:9px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.result-name{
+    font-weight:bold;
+    color:#0757b8;
+}
+
+.result-buttons{
+    display:flex;
+    gap:5px;
+}
+
+.result-buttons button{
+    padding:7px 10px;
+    font-size:12px;
+}
+
+/* =========================
+   LOCAL STORAGE TABLE
+========================= */
+
+.storage-panel{
+    background:#fff;
+    padding:15px;
+    margin-bottom:18px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+
+.storage-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.storage-header h3{
+    margin:0;
+    color:#0757b8;
+}
+
+.storage-count{
+    background:#0757b8;
+    color:#fff;
+    padding:6px 10px;
+    border-radius:5px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.storage-table-wrap{
+    width:100%;
+    overflow-x:auto;
+}
+
+.storage-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+}
+
+.storage-table th{
+    background:#0757b8;
+    color:#fff;
+    border:1px solid #0757b8;
+    padding:8px 5px;
+    font-size:12px;
+    text-align:center;
+}
+
+.storage-table td{
+    border:1px solid #bbb;
+    padding:7px 5px;
+    font-size:12px;
+    text-align:center;
+    word-break:break-word;
+}
+
+.storage-table tr:nth-child(even){
+    background:#f4f8fc;
+}
+
+.storage-actions{
+    display:flex;
+    justify-content:center;
+    gap:4px;
+}
+
+.storage-actions button{
+    padding:5px 8px;
+    font-size:11px;
+}
+
+.no-records{
+    text-align:center;
+    padding:15px;
+    color:#777;
+    font-size:13px;
+}
+
+/* =========================
+   PRINTABLE A4 FORM
+========================= */
+
+.print-area{
+    width:210mm;
+    height:297mm;
+    min-height:297mm;
+    max-height:297mm;
+
+    margin:auto;
+    background:#fff;
+
+    border:2px solid #0757b8;
+    border-radius:6px;
+
+    padding:4mm;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    height:34mm;
+    flex:0 0 34mm;
+
+    display:grid;
+    grid-template-columns:27% 53% 20%;
+    align-items:center;
+}
+
+.header-left{
+    text-align:center;
+}
+
+.header-logo{
+    width:34mm;
+    height:21mm;
+    object-fit:contain;
+    display:block;
+    margin:0 auto;
+}
+
+.header-centre{
+    text-align:center;
+}
+
+.republic{
+    font-family:"Times New Roman",serif;
+    font-size:18px;
+    line-height:19px;
+    font-weight:bold;
+}
+
+.main-title{
+    background:#0757b8;
+    color:#fff;
+    width:94%;
+    margin:2.5mm auto 1.5mm;
+    border-radius:7px;
+    padding:2mm;
+    font-size:21px;
+    font-weight:900;
+}
+
+.tel{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.header-right{
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.opd-display{
+    color:#111;
+    font-weight:900;
+    border-bottom:1px dotted #111;
+    display:inline-block;
+    min-width:27mm;
+    padding:1mm;
+}
+
+/* =========================
+   PATIENT TABLE
+========================= */
+
+.patient-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+    flex:0 0 auto;
+}
+
+.patient-table th{
+    background:#dcecff;
+    border:1.5px solid #0757b8;
+    height:8mm;
+    font-size:11px;
+    text-align:center;
+    font-weight:900;
+}
+
+.patient-table td{
+    border:1.5px solid #0757b8;
+    height:8mm;
+    font-size:11px;
+    font-weight:bold;
+    text-align:center;
+    padding:1.5mm;
+    overflow:hidden;
+    word-wrap:break-word;
+}
+
+.second-details{
+    margin-top:3mm;
+}
+
+.second-details th{
+    height:7mm;
+}
+
+.second-details td{
+    height:8mm;
+}
+
+.sex-box{
+    width:6mm;
+    height:6mm;
+    border:1.5px solid #111;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:15px;
+    font-weight:bold;
+}
+
+/* =========================
+   ATTENDANCE TITLE
+========================= */
+
+.attendance-title{
+    width:58%;
+    margin:2.5mm auto 1.5mm;
+    padding:1.8mm;
+
+    background:#0757b8;
+    color:#fff;
+
+    border-radius:7mm;
+
+    text-align:center;
+
+    font-size:17px;
+    font-weight:900;
+
+    flex:0 0 auto;
+}
+
+.attendance-subtitle{
+    text-align:center;
+    font-size:9px;
+    font-weight:bold;
+    margin-bottom:1.5mm;
+
+    flex:0 0 auto;
+}
+
+/* =========================
+   VITAL SIGNS
+========================= */
+
+.doctor-row{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+
+    border:1.5px solid #0757b8;
+    overflow:hidden;
+
+    flex:0 0 8mm;
+}
+
+.doctor-cell{
+    min-height:8mm;
+    border-right:1.5px solid #0757b8;
+    padding:1.8mm;
+
+    font-size:11px;
+    font-weight:bold;
+}
+
+.doctor-cell:last-child{
+    border-right:none;
+}
+
+.doctor-row-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    border:1.5px solid #0757b8;
+    margin-top:1.5mm;
+    overflow:hidden;
+
+    flex:0 0 8mm;
+}
+
+.doctor-row-2 .doctor-cell{
+    min-height:8mm;
+}
+
+/* =========================
+   VISIT DETAILS
+========================= */
+
+.visit-heading{
+    margin-top:2mm;
+
+    text-align:center;
+
+    background:#0757b8;
+    color:#fff;
+
+    font-size:13px;
+    font-weight:bold;
+
+    padding:1.4mm;
+
+    border-radius:4px;
+
+    flex:0 0 auto;
+}
+
+
+/*
+   VISIT TABLE
+
+   The table is intentionally blank for
+   the doctor to fill by hand.
+
+   There are NO horizontal lines between
+   the blank rows.
+
+   Only the vertical column separators
+   remain visible.
+*/
+
+.visit-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+
+    margin-top:1.2mm;
+
+    flex:1 1 auto;
+    min-height:0;
+}
+
+
+/* Header */
+
+.visit-table th{
+    background:#dcecff;
+
+    border-top:1.5px solid #0757b8;
+    border-bottom:1.5px solid #0757b8;
+
+    border-left:1.5px solid #0757b8;
+    border-right:1.5px solid #0757b8;
+
+    height:8mm;
+
+    font-size:10px;
+    font-weight:900;
+
+    text-align:center;
+}
+
+
+/* 
+   Strong vertical separator between
+   DATE and DETAILS / NOTES
+*/
+
+.visit-table th:nth-child(2),
+.visit-table td:nth-child(2){
+
+    border-left:3px solid #0757b8;
+    border-right:3px solid #0757b8;
+
+}
+
+
+/*
+   Strong vertical separator between
+   DETAILS / NOTES and TREATMENT
+*/
+
+.visit-table th:nth-child(3),
+.visit-table td:nth-child(3){
+
+    border-left:3px solid #0757b8;
+    border-right:1.5px solid #0757b8;
+
+}
+
+
+/*
+   BODY OF VISIT TABLE
+
+   No horizontal borders.
+
+   This leaves the writing area blank
+   for the doctor.
+*/
+
+.visit-table tbody td{
+
+    border-top:none;
+    border-bottom:none;
+
+    border-left:1.5px solid #0757b8;
+    border-right:1.5px solid #0757b8;
+
+    font-size:10px;
+
+    padding:1mm;
+
+    vertical-align:top;
+
+}
+
+
+/*
+   Remove horizontal line between
+   all doctor writing rows.
+*/
+
+.visit-table tbody tr{
+    height:14mm;
+}
+
+
+/*
+   Keep the outside bottom boundary
+   of the blank writing area.
+*/
+
+.visit-table tbody tr:last-child td{
+    border-bottom:1.5px solid #0757b8;
+}
+
+
+/*
+   Column widths
+*/
+
+.visit-table .date-column{
+    width:18%;
+}
+
+.visit-table .details-column{
+    width:45%;
+}
+
+.visit-table .treatment-column{
+    width:37%;
+}
+
+
+/* =========================
+   BOTTOM CARD
+========================= */
+
+.separator{
+    border-top:1.5px dashed #111;
+    margin:1.5mm 0;
+
+    flex:0 0 auto;
+}
+
+.lower-card{
+    border:1.5px solid #0757b8;
+    border-radius:5px;
+
+    padding:1.5mm;
+
+    height:21mm;
+    min-height:21mm;
+    max-height:21mm;
+
+    overflow:hidden;
+
+    flex:0 0 21mm;
+}
+
+.lower-header{
+    display:grid;
+    grid-template-columns:25% 55% 20%;
+    align-items:center;
+
+    height:7mm;
+}
+
+.lower-left{
+    text-align:center;
+}
+
+.lower-logo{
+    width:24mm;
+    height:7mm;
+    object-fit:contain;
+}
+
+.lower-title{
+    background:#0757b8;
+    color:white;
+
+    text-align:center;
+
+    border-radius:4px;
+
+    padding:1.2mm;
+
+    font-size:11px;
+    font-weight:900;
+}
+
+.lower-opd{
+    font-size:9px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.lower-opd-value{
+    display:block;
+    font-size:10px;
+    margin-top:.5mm;
+}
+
+.lower-line{
+    height:5mm;
+
+    border:1px solid #0757b8;
+    border-radius:3px;
+
+    margin-top:.7mm;
+
+    padding:.8mm 1.5mm;
+
+    font-size:9px;
+    font-weight:bold;
+
+    line-height:3mm;
+}
+
+.lower-value{
+    margin-left:3mm;
+
+    display:inline-block;
+
+    width:80%;
+
+    border-bottom:1px dotted #111;
+
+    min-height:3mm;
+}
+
+/* =========================
+   PRINT
+========================= */
+
+@page{
+    size:A4 portrait;
+    margin:0;
+}
+
+@media print{
+
+    html,
+    body{
+        width:210mm;
+        height:297mm;
+
+        margin:0;
+        padding:0;
+
+        background:#fff;
+    }
+
+    .no-print{
+        display:none !important;
+    }
+
+    .print-area{
+
+        display:flex;
+        flex-direction:column;
+
+        width:210mm;
+        height:297mm;
+
+        min-height:297mm;
+        max-height:297mm;
+
+        margin:0;
+
+        border:2px solid #0757b8;
+        border-radius:0;
+
+        padding:4mm;
+
+        overflow:hidden;
+    }
+
+
+    .visit-table{
+        flex:1 1 auto;
+        min-height:0;
+    }
+
+
+    /*
+       Keep visit rows blank when printed.
+       No horizontal lines between rows.
+    */
+
+    .visit-table tbody td{
+        border-top:none;
+        border-bottom:none;
+    }
+
+
+    .visit-table tbody tr{
+        height:14mm;
+    }
+
+
+    .visit-table tbody tr:last-child td{
+        border-bottom:1.5px solid #0757b8;
+    }
+
+
+    .lower-card{
+        flex:0 0 21mm;
+
+        height:21mm;
+        min-height:21mm;
+        max-height:21mm;
+    }
+}
+
+/* =========================
+   RESPONSIVE SCREEN
+========================= */
+
+@media screen and (max-width:850px){
+
+    body{
+        padding:5px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .print-area{
+        transform-origin:top left;
+
+        transform:scale(.75);
+
+        margin-bottom:-70mm;
+    }
+}
+
+@media screen and (max-width:550px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .print-area{
+
+        transform:scale(.45);
+
+        margin-bottom:-165mm;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- =====================================================
+     PATIENT REGISTRATION
+===================================================== -->
+
+<div class="registration-panel no-print">
+
+    <h2>PATIENT DETAILS</h2>
+
+
+    <div class="form-grid">
+
+
+        <div class="field">
+
+            <label>First Name *</label>
+
+            <input
+                type="text"
+                id="firstName"
+                placeholder="First name">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Middle Name</label>
+
+            <input
+                type="text"
+                id="middleName"
+                placeholder="Middle name">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Last Name *</label>
+
+            <input
+                type="text"
+                id="lastName"
+                placeholder="Last name">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Age *</label>
+
+            <input
+                type="number"
+                id="age"
+                min="0"
+                max="120"
+                placeholder="Age">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>ID No. *</label>
+
+            <input
+                type="text"
+                id="idNo"
+                placeholder="ID number">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Village</label>
+
+            <input
+                type="text"
+                id="village"
+                placeholder="Village">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Sub-location</label>
+
+            <input
+                type="text"
+                id="subLocation"
+                placeholder="Sub-location">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Telephone *</label>
+
+            <input
+                type="tel"
+                id="telephone"
+                placeholder="07XXXXXXXX">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Sex *</label>
+
+            <select id="sex">
+
+                <option value="">
+                    Select Sex
+                </option>
+
+                <option value="M">
+                    Male
+                </option>
+
+                <option value="F">
+                    Female
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>OPD Number *</label>
+
+            <input
+                type="text"
+                id="opdNo"
+                placeholder="Enter OPD number">
+
+        </div>
+
+
+    </div>
+
+
+    <div class="buttons">
+
+
+        <button
+            class="save-btn"
+            onclick="savePatient()">
+
+            SAVE PATIENT
+
+        </button>
+
+
+        <button
+            class="print-btn"
+            onclick="printForm()">
+
+            PRINT FORM
+
+        </button>
+
+
+        <button
+            class="clear-btn"
+            onclick="clearForm()">
+
+            CLEAR
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="message"
+        style="
+        margin-top:10px;
+        font-weight:bold;
+        color:#138a3d;
+        ">
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     SEARCH PATIENT
+===================================================== -->
+
+<div class="search-panel no-print">
+
+    <h3>
+        SEARCH PATIENT
+    </h3>
+
+
+    <input
+        type="search"
+        id="search"
+        class="search-box"
+        placeholder="Search by patient name, ID number or OPD number..."
+        oninput="searchPatients()">
+
+
+    <div id="results"></div>
+
+</div>
+
+
+
+<!-- =====================================================
+     LOCAL STORAGE SAVED PATIENTS
+===================================================== -->
+
+<div class="storage-panel no-print">
+
+
+    <div class="storage-header">
+
+        <h3>
+            LOCAL STORAGE - SAVED PATIENTS
+        </h3>
+
+
+        <span
+            id="storageCount"
+            class="storage-count">
+
+            0 PATIENTS
+
+        </span>
+
+    </div>
+
+
+    <div class="storage-table-wrap">
+
+
+        <table class="storage-table">
+
+
+            <thead>
+
+                <tr>
+
+                    <th style="width:5%;">
+                        NO.
+                    </th>
+
+                    <th style="width:20%;">
+                        PATIENT NAME
+                    </th>
+
+                    <th style="width:12%;">
+                        ID NO.
+                    </th>
+
+                    <th style="width:12%;">
+                        OPD NO.
+                    </th>
+
+                    <th style="width:13%;">
+                        TELEPHONE
+                    </th>
+
+                    <th style="width:10%;">
+                        SEX
+                    </th>
+
+                    <th style="width:12%;">
+                        DATE SAVED
+                    </th>
+
+                    <th style="width:16%;">
+                        ACTION
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="storageTableBody">
+
+            </tbody>
+
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     PRINTABLE A4 PATIENT FORM
+===================================================== -->
+
+<div
+    class="print-area"
+    id="printArea">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+
+        <div class="header-left">
+
+            <img
+                src="zeva.png"
+                class="header-logo"
+                alt="Zeva Medical Centre Logo">
+
+        </div>
+
+
+        <div class="header-centre">
+
+
+            <div class="republic">
+
+                REPUBLIC OF KENYA<br>
+                MINISTRY OF HEALTH
+
+            </div>
+
+
+            <div class="main-title">
+
+                ZEVA MEDICAL CENTRE
+
+            </div>
+
+
+            <div class="tel">
+
+                TEL: 0708534991
+
+            </div>
+
+
+        </div>
+
+
+        <div class="header-right">
+
+            OPD NO.<br>
+
+            <span
+                id="outOpdNo"
+                class="opd-display">
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- PATIENT DETAILS TABLE -->
+
+    <table class="patient-table">
+
+
+        <tr>
+
+
+            <th style="width:20%;">
+
+                FIRST NAME
+
+            </th>
+
+
+            <th style="width:20%;">
+
+                MIDDLE NAME
+
+            </th>
+
+
+            <th style="width:19%;">
+
+                LAST NAME
+
+            </th>
+
+
+            <th style="width:9%;">
+
+                AGE
+
+            </th>
+
+
+            <th style="width:32%;">
+
+                NAME
+
+            </th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+            <td id="outFirstName"></td>
+
+            <td id="outMiddleName"></td>
+
+            <td id="outLastName"></td>
+
+            <td id="outAge"></td>
+
+            <td id="outFullName"></td>
+
+
+        </tr>
+
+
+    </table>
+
+
+
+    <!-- SECOND PATIENT DETAILS TABLE -->
+
+    <table
+        class="patient-table second-details">
+
+
+        <tr>
+
+
+            <th style="width:7%;">
+
+                M
+
+            </th>
+
+
+            <th style="width:7%;">
+
+                F
+
+            </th>
+
+
+            <th style="width:45%;">
+
+                SUB-LOCATION
+
+            </th>
+
+
+            <th style="width:41%;">
+
+                TELEPHONE
+
+            </th>
+
+
+        </tr>
+
+
+        <tr>
+
+
+            <td>
+
+                <div
+                    class="sex-box"
+                    id="maleBox">
+                </div>
+
+            </td>
+
+
+            <td>
+
+                <div
+                    class="sex-box"
+                    id="femaleBox">
+                </div>
+
+            </td>
+
+
+            <td id="outSubLocation"></td>
+
+
+            <td id="outTelephone"></td>
+
+
+        </tr>
+
+
+    </table>
+
+
+
+    <!-- ATTENDANCE TITLE -->
+
+    <div class="attendance-title">
+
+        OUTPATIENT ATTENDANCE CARD
+
+    </div>
+
+
+    <div class="attendance-subtitle">
+
+        FOR EACH VISIT DOCUMENT HISTORY, PHYSICAL EXAMINATION,
+        INVESTIGATION AND TREATMENT
+
+    </div>
+
+
+
+    <!-- VITAL SIGNS -->
+
+    <div class="doctor-row">
+
+
+        <div class="doctor-cell">
+
+            WEIGHT....................................
+
+        </div>
+
+
+        <div class="doctor-cell">
+
+            HEIGHT....................................
+
+        </div>
+
+
+        <div class="doctor-cell">
+
+            TEMP......................................
+
+        </div>
+
+
+    </div>
+
+
+    <div class="doctor-row-2">
+
+
+        <div class="doctor-cell">
+
+            B.P........................................................
+
+        </div>
+
+
+        <div class="doctor-cell">
+
+            BMI.......................................................
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- VISIT DETAILS -->
+
+    <div class="visit-heading">
+
+        VISIT DETAILS / TREATMENT RECORD
+
+    </div>
+
+
+    <!--
+        BLANK DOCTOR WRITING TABLE
+
+        No horizontal lines between rows.
+        Vertical separators remain visible.
+    -->
+
+    <table class="visit-table">
+
+
+        <thead>
+
+            <tr>
+
+
+                <th class="date-column">
+
+                    DATE
+
+                </th>
+
+
+                <th class="details-column">
+
+                    DETAILS / NOTES
+
+                </th>
+
+
+                <th class="treatment-column">
+
+                    TREATMENT
+
+                </th>
+
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+            <tr>
+
+                <td></td>
+
+                <td></td>
+
+                <td></td>
+
+            </tr>
+
+
+            <tr>
+
+                <td></td>
+
+                <td></td>
+
+                <td></td>
+
+            </tr>
+
+
+            <tr>
+
+                <td></td>
+
+                <td></td>
+
+                <td></td>
+
+            </tr>
+
+
+            <tr>
+
+                <td></td>
+
+                <td></td>
+
+                <td></td>
+
+            </tr>
+
+
+            <tr>
+
+                <td></td>
+
+                <td></td>
+
+                <td></td>
+
+            </tr>
+
+
+            <tr>
+
+                <td></td>
+
+                <td></td>
+
+                <td></td>
+
+            </tr>
+
+
+            <tr>
+
+                <td></td>
+
+                <td></td>
+
+                <td></td>
+
+            </tr>
+
+
+            <tr>
+
+                <td></td>
+
+                <td></td>
+
+                <td></td>
+
+            </tr>
+
+
+        </tbody>
+
+
+    </table>
+
+
+
+    <!-- BOTTOM SEPARATOR -->
+
+    <div class="separator"></div>
+
+
+
+    <!-- BOTTOM CARD -->
+
+    <div class="lower-card">
+
+
+        <div class="lower-header">
+
+
+            <div class="lower-left">
+
+                <img
+                    src="zeva.png"
+                    class="lower-logo"
+                    alt="Zeva Logo">
+
+            </div>
+
+
+            <div class="lower-title">
+
+                OUTPATIENT ATTENDANCE CARD
+
+            </div>
+
+
+            <div class="lower-opd">
+
+                OPD NO.
+
+                <span
+                    id="lowerOpdNo"
+                    class="lower-opd-value">
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="lower-line">
+
+            NAME
+
+            <span
+                class="lower-value"
+                id="lowerName">
+            </span>
+
+        </div>
+
+
+        <div class="lower-line">
+
+            TELEPHONE
+
+            <span
+                class="lower-value"
+                id="lowerTelephone">
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
+
+const STORAGE_KEY =
+    "zeva_medical_patient_records";
+
+
+function getPatients(){
+
+    return JSON.parse(
+        localStorage.getItem(STORAGE_KEY)
+    ) || [];
+
+}
+
+
+function savePatients(patients){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(patients)
+    );
+
+}
+
+
+/* =====================================================
+   SAVE PATIENT
+===================================================== */
+
+function savePatient(){
+
+    const firstName =
+        document.getElementById(
+            "firstName"
+        ).value.trim();
+
+
+    const middleName =
+        document.getElementById(
+            "middleName"
+        ).value.trim();
+
+
+    const lastName =
+        document.getElementById(
+            "lastName"
+        ).value.trim();
+
+
+    const age =
+        document.getElementById(
+            "age"
+        ).value.trim();
+
+
+    const idNo =
+        document.getElementById(
+            "idNo"
+        ).value.trim();
+
+
+    const village =
+        document.getElementById(
+            "village"
+        ).value.trim();
+
+
+    const subLocation =
+        document.getElementById(
+            "subLocation"
+        ).value.trim();
+
+
+    const telephone =
+        document.getElementById(
+            "telephone"
+        ).value.trim();
+
+
+    const sex =
+        document.getElementById(
+            "sex"
+        ).value;
+
+
+    const opdNo =
+        document.getElementById(
+            "opdNo"
+        ).value.trim();
+
+
+    if(
+        !firstName ||
+        !lastName ||
+        !age ||
+        !idNo ||
+        !telephone ||
+        !sex ||
+        !opdNo
+    ){
+
+        alert(
+            "Please fill in First Name, Last Name, Age, ID No., Telephone, Sex and OPD Number."
+        );
+
+        return;
+    }
+
+
+    let patients =
+        getPatients();
+
+
+    const existing =
+        patients.find(
+            p =>
+            String(p.idNo).toLowerCase()
+            ===
+            idNo.toLowerCase()
+        );
+
+
+    if(existing){
+
+        const update =
+            confirm(
+                "A patient with this ID number already exists.\n\n" +
+                "Do you want to update the existing record?"
+            );
+
+
+        if(!update){
+            return;
+        }
+
+
+        patients =
+            patients.filter(
+                p =>
+                String(p.idNo).toLowerCase()
+                !==
+                idNo.toLowerCase()
+            );
+
+    }
+
+
+    const patient = {
+
+        id:Date.now(),
+
+        firstName:firstName,
+
+        middleName:middleName,
+
+        lastName:lastName,
+
+        age:age,
+
+        idNo:idNo,
+
+        village:village,
+
+        subLocation:subLocation,
+
+        telephone:telephone,
+
+        sex:sex,
+
+        opdNo:opdNo,
+
+        date:new Date()
+            .toLocaleDateString("en-GB")
+
+    };
+
+
+    patients.push(patient);
+
+    savePatients(patients);
+
+    displayPatient(patient);
+
+
+    document.getElementById(
+        "message"
+    ).innerText =
+        "Patient saved successfully in local storage.";
+
+
+    searchPatients();
+
+    displayStoragePatients();
+
+}
+
+
+/* =====================================================
+   DISPLAY PATIENT
+===================================================== */
+
+function displayPatient(patient){
+
+    document.getElementById(
+        "outFirstName"
+    ).innerText =
+        patient.firstName || "";
+
+
+    document.getElementById(
+        "outMiddleName"
+    ).innerText =
+        patient.middleName || "";
+
+
+    document.getElementById(
+        "outLastName"
+    ).innerText =
+        patient.lastName || "";
+
+
+    document.getElementById(
+        "outAge"
+    ).innerText =
+        patient.age || "";
+
+
+    const fullName =
+        [
+            patient.firstName,
+            patient.middleName,
+            patient.lastName
+        ]
+        .filter(Boolean)
+        .join(" ");
+
+
+    document.getElementById(
+        "outFullName"
+    ).innerText =
+        fullName;
+
+
+    document.getElementById(
+        "outSubLocation"
+    ).innerText =
+        patient.subLocation || "";
+
+
+    document.getElementById(
+        "outTelephone"
+    ).innerText =
+        patient.telephone || "";
+
+
+    document.getElementById(
+        "outOpdNo"
+    ).innerText =
+        patient.opdNo || "";
+
+
+    document.getElementById(
+        "lowerOpdNo"
+    ).innerText =
+        patient.opdNo || "";
+
+
+    document.getElementById(
+        "lowerName"
+    ).innerText =
+        fullName;
+
+
+    document.getElementById(
+        "lowerTelephone"
+    ).innerText =
+        patient.telephone || "";
+
+
+    const male =
+        document.getElementById(
+            "maleBox"
+        );
+
+
+    const female =
+        document.getElementById(
+            "femaleBox"
+        );
+
+
+    male.innerText = "";
+
+    female.innerText = "";
+
+
+    if(patient.sex === "M"){
+
+        male.innerText = "✓";
+
+    }
+
+
+    if(patient.sex === "F"){
+
+        female.innerText = "✓";
+
+    }
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchPatients(){
+
+    const search =
+        document.getElementById(
+            "search"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    const results =
+        document.getElementById(
+            "results"
+        );
+
+
+    results.innerHTML = "";
+
+
+    if(!search){
+
+        displayStoragePatients();
+
+        return;
+
+    }
+
+
+    const patients =
+        getPatients();
+
+
+    const matches =
+        patients.filter(
+            patient => {
+
+                const name =
+                    [
+                        patient.firstName,
+                        patient.middleName,
+                        patient.lastName
+                    ]
+                    .filter(Boolean)
+                    .join(" ")
+                    .toLowerCase();
+
+
+                const id =
+                    String(
+                        patient.idNo || ""
+                    ).toLowerCase();
+
+
+                const opd =
+                    String(
+                        patient.opdNo || ""
+                    ).toLowerCase();
+
+
+                return(
+                    name.includes(search) ||
+                    id.includes(search) ||
+                    opd.includes(search)
+                );
+
+            }
+        );
+
+
+    if(matches.length === 0){
+
+        results.innerHTML =
+            "<p>No patient found.</p>";
+
+    }
+    else{
+
+        matches.forEach(
+            patient => {
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.className =
+                    "search-result";
+
+
+                const name =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                const fullName =
+                    [
+                        patient.firstName,
+                        patient.middleName,
+                        patient.lastName
+                    ]
+                    .filter(Boolean)
+                    .join(" ");
+
+
+                name.innerHTML = `
+
+                    <span class="result-name">
+
+                        ${escapeHTML(fullName)}
+
+                    </span>
+
+                    <br>
+
+                    ID No:
+                    ${escapeHTML(patient.idNo)}
+
+                    &nbsp; | &nbsp;
+
+                    OPD No:
+                    ${escapeHTML(patient.opdNo)}
+
+                    &nbsp; | &nbsp;
+
+                    Telephone:
+                    ${escapeHTML(patient.telephone)}
+
+                `;
+
+
+                const action =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                action.className =
+                    "result-buttons";
+
+
+                const load =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                load.className =
+                    "load-btn";
+
+
+                load.innerText =
+                    "LOAD";
+
+
+                load.onclick =
+                    function(){
+
+                        loadPatient(
+                            patient.id
+                        );
+
+                    };
+
+
+                const del =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                del.className =
+                    "delete-btn";
+
+
+                del.innerText =
+                    "DELETE";
+
+
+                del.onclick =
+                    function(){
+
+                        deletePatient(
+                            patient.id
+                        );
+
+                    };
+
+
+                action.appendChild(load);
+
+                action.appendChild(del);
+
+                row.appendChild(name);
+
+                row.appendChild(action);
+
+                results.appendChild(row);
+
+            }
+        );
+
+    }
+
+
+    displayStoragePatients(matches);
+
+}
+
+
+/* =====================================================
+   DISPLAY STORAGE TABLE
+===================================================== */
+
+function displayStoragePatients(
+    filteredPatients
+){
+
+    const tbody =
+        document.getElementById(
+            "storageTableBody"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    const patients =
+        filteredPatients !== undefined
+        ? filteredPatients
+        : getPatients();
+
+
+    document.getElementById(
+        "storageCount"
+    ).innerText =
+        patients.length +
+        (
+            patients.length === 1
+            ? " PATIENT"
+            : " PATIENTS"
+        );
+
+
+    if(patients.length === 0){
+
+        const row =
+            document.createElement(
+                "tr"
+            );
+
+
+        row.innerHTML = `
+
+            <td
+                colspan="8"
+                class="no-records">
+
+                No patients currently saved
+                in local storage.
+
+            </td>
+
+        `;
+
+
+        tbody.appendChild(row);
+
+        return;
+
+    }
+
+
+    patients.forEach(
+        (patient,index) => {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const fullName =
+                [
+                    patient.firstName,
+                    patient.middleName,
+                    patient.lastName
+                ]
+                .filter(Boolean)
+                .join(" ");
+
+
+            const sex =
+                patient.sex === "M"
+                ? "Male"
+                : patient.sex === "F"
+                ? "Female"
+                : "";
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    <strong>
+                        ${escapeHTML(fullName)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${escapeHTML(patient.idNo)}
+                </td>
+
+                <td>
+                    <strong>
+                        ${escapeHTML(patient.opdNo)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${escapeHTML(patient.telephone)}
+                </td>
+
+                <td>
+                    ${sex}
+                </td>
+
+                <td>
+                    ${escapeHTML(patient.date)}
+                </td>
+
+                <td>
+
+                    <div class="storage-actions">
+
+                        <button
+                            class="load-btn"
+                            onclick="loadPatient(${patient.id})">
+
+                            LOAD
+
+                        </button>
+
+
+                        <button
+                            class="delete-btn"
+                            onclick="deletePatient(${patient.id})">
+
+                            DELETE
+
+                        </button>
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(row);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LOAD PATIENT
+===================================================== */
+
+function loadPatient(id){
+
+    const patients =
+        getPatients();
+
+
+    const patient =
+        patients.find(
+            p => p.id === id
+        );
+
+
+    if(!patient){
+
+        alert(
+            "Patient not found."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "firstName"
+    ).value =
+        patient.firstName || "";
+
+
+    document.getElementById(
+        "middleName"
+    ).value =
+        patient.middleName || "";
+
+
+    document.getElementById(
+        "lastName"
+    ).value =
+        patient.lastName || "";
+
+
+    document.getElementById(
+        "age"
+    ).value =
+        patient.age || "";
+
+
+    document.getElementById(
+        "idNo"
+    ).value =
+        patient.idNo || "";
+
+
+    document.getElementById(
+        "village"
+    ).value =
+        patient.village || "";
+
+
+    document.getElementById(
+        "subLocation"
+    ).value =
+        patient.subLocation || "";
+
+
+    document.getElementById(
+        "telephone"
+    ).value =
+        patient.telephone || "";
+
+
+    document.getElementById(
+        "sex"
+    ).value =
+        patient.sex || "";
+
+
+    document.getElementById(
+        "opdNo"
+    ).value =
+        patient.opdNo || "";
+
+
+    displayPatient(patient);
+
+
+    document.getElementById(
+        "message"
+    ).innerText =
+        "Patient loaded successfully.";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================================
+   DELETE PATIENT
+===================================================== */
+
+function deletePatient(id){
+
+    const patients =
+        getPatients();
+
+
+    const patient =
+        patients.find(
+            p => p.id === id
+        );
+
+
+    if(!patient){
+        return;
+    }
+
+
+    const name =
+        [
+            patient.firstName,
+            patient.middleName,
+            patient.lastName
+        ]
+        .filter(Boolean)
+        .join(" ");
+
+
+    if(!confirm(
+
+        "Delete patient:\n\n" +
+        name +
+        "\n\nID No: " +
+        patient.idNo +
+        "\nOPD No: " +
+        patient.opdNo +
+        "?"
+
+    )){
+
+        return;
+
+    }
+
+
+    const updated =
+        patients.filter(
+            p => p.id !== id
+        );
+
+
+    savePatients(updated);
+
+
+    searchPatients();
+
+    displayStoragePatients();
+
+
+    document.getElementById(
+        "message"
+    ).innerText =
+        "Patient deleted from local storage.";
+
+}
+
+
+/* =====================================================
+   CLEAR FORM
+===================================================== */
+
+function clearForm(){
+
+    document.getElementById(
+        "firstName"
+    ).value = "";
+
+
+    document.getElementById(
+        "middleName"
+    ).value = "";
+
+
+    document.getElementById(
+        "lastName"
+    ).value = "";
+
+
+    document.getElementById(
+        "age"
+    ).value = "";
+
+
+    document.getElementById(
+        "idNo"
+    ).value = "";
+
+
+    document.getElementById(
+        "village"
+    ).value = "";
+
+
+    document.getElementById(
+        "subLocation"
+    ).value = "";
+
+
+    document.getElementById(
+        "telephone"
+    ).value = "";
+
+
+    document.getElementById(
+        "sex"
+    ).value = "";
+
+
+    document.getElementById(
+        "opdNo"
+    ).value = "";
+
+
+    document.getElementById(
+        "message"
+    ).innerText = "";
+
+
+    displayPatient({
+
+        firstName:"",
+        middleName:"",
+        lastName:"",
+        age:"",
+        subLocation:"",
+        telephone:"",
+        sex:"",
+        opdNo:""
+
+    });
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+function printForm(){
+
+    const firstName =
+        document.getElementById(
+            "firstName"
+        ).value.trim();
+
+
+    const lastName =
+        document.getElementById(
+            "lastName"
+        ).value.trim();
+
+
+    const opdNo =
+        document.getElementById(
+            "opdNo"
+        ).value.trim();
+
+
+    if(
+        !firstName ||
+        !lastName ||
+        !opdNo
+    ){
+
+        alert(
+            "Please enter or load the patient's First Name, Last Name and OPD Number before printing."
+        );
+
+        return;
+
+    }
+
+
+    displayPatient({
+
+        firstName:firstName,
+
+        middleName:
+            document.getElementById(
+                "middleName"
+            ).value.trim(),
+
+        lastName:lastName,
+
+        age:
+            document.getElementById(
+                "age"
+            ).value.trim(),
+
+        subLocation:
+            document.getElementById(
+                "subLocation"
+            ).value.trim(),
+
+        telephone:
+            document.getElementById(
+                "telephone"
+            ).value.trim(),
+
+        sex:
+            document.getElementById(
+                "sex"
+            ).value,
+
+        opdNo:opdNo
+
+    });
+
+
+    window.print();
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value || "")
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+displayPatient({
+
+    firstName:"",
+    middleName:"",
+    lastName:"",
+    age:"",
+    subLocation:"",
+    telephone:"",
+    sex:"",
+    opdNo:""
+
+});
+
+
+displayStoragePatients();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,4128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zeva Medical Centre - Outpatient Invoice</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f2f5f8;
+  color:#222;
+}
+
+.container{
+  max-width:1200px;
+  margin:20px auto;
+  background:#fff;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
+}
+
+.logo-top{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.logo-top img{
+  width:95px;
+  height:95px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 8px;
+}
+
+.logo-top .facility-name{
+  font-size:20px;
+  font-weight:bold;
+  color:#0066b3;
+}
+
+h1,h2,h3{
+  color:#0066b3;
+}
+
+h1{
+  text-align:center;
+  margin:5px 0 20px;
+}
+
+.section{
+  border:1px solid #ddd;
+  padding:15px;
+  margin-bottom:18px;
+  border-radius:8px;
+}
+
+.section-title{
+  font-size:18px;
+  font-weight:bold;
+  color:#0066b3;
+  margin-bottom:12px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+}
+
+.field label{
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:9px;
+  border:1px solid #bbb;
+  border-radius:5px;
+  font-size:14px;
+}
+
+textarea{
+  min-height:70px;
+  resize:vertical;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+
+th,
+td{
+  border:1px solid #ccc;
+  padding:7px;
+  vertical-align:middle;
+}
+
+th{
+  background:#0066b3;
+  color:#fff;
+}
+
+.charge-table input{
+  padding:6px;
+}
+
+.description-input{
+  width:100%;
+}
+
+.qty-input{
+  width:80px;
+}
+
+.amount-input{
+  width:110px;
+}
+
+.row-total{
+  text-align:right;
+  font-weight:bold;
+}
+
+.btn{
+  border:0;
+  padding:10px 15px;
+  border-radius:5px;
+  cursor:pointer;
+  font-weight:bold;
+  margin:3px;
+}
+
+.btn-primary{
+  background:#0066b3;
+  color:white;
+}
+
+.btn-success{
+  background:#168a42;
+  color:white;
+}
+
+.btn-danger{
+  background:#c62828;
+  color:white;
+}
+
+.btn-warning{
+  background:#e09b00;
+  color:white;
+}
+
+.btn-secondary{
+  background:#555;
+  color:white;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:15px;
+}
+
+.total-box{
+  max-width:500px;
+  margin-left:auto;
+  margin-top:15px;
+}
+
+.total-row{
+  display:flex;
+  justify-content:space-between;
+  padding:7px;
+  border-bottom:1px solid #ddd;
+}
+
+.total-row.grand{
+  font-size:19px;
+  font-weight:bold;
+  background:#eaf4fb;
+  color:#0066b3;
+}
+
+.storage-box{
+  background:#f8fafc;
+  border:1px solid #ccd6df;
+  padding:15px;
+  border-radius:8px;
+  margin-top:15px;
+}
+
+.storage-title{
+  font-size:18px;
+  font-weight:bold;
+  color:#0066b3;
+  margin-bottom:8px;
+}
+
+.saved-table{
+  margin-top:12px;
+  overflow-x:auto;
+}
+
+.saved-table table{
+  min-width:850px;
+}
+
+.small{
+  font-size:12px;
+  color:#666;
+}
+
+
+/* =========================================================
+   PRINT DOCUMENTS
+   ========================================================= */
+
+.invoice-print,
+.receipt-print{
+  display:none;
+}
+
+
+/* =========================================================
+   SCREEN RECEIPT PREVIEW
+   ========================================================= */
+
+.receipt-print.screen-preview{
+  display:block;
+  width:210mm;
+  height:297mm;
+  min-height:297mm;
+  max-height:297mm;
+  margin:20px auto;
+  padding:10mm 12mm;
+  background:#fff;
+  color:#000;
+  box-shadow:0 2px 12px rgba(0,0,0,.15);
+  overflow:hidden;
+}
+
+
+/* =========================================================
+   RECEIPT
+   ========================================================= */
+
+.receipt-document{
+  width:100%;
+  font-family:"Courier New",Courier,monospace;
+  font-size:12px;
+  line-height:1.25;
+}
+
+.receipt-line{
+  white-space:pre;
+  overflow:hidden;
+  width:100%;
+}
+
+.receipt-center{
+  text-align:center;
+}
+
+.receipt-hospital{
+  font-size:19px;
+  font-weight:bold;
+}
+
+.receipt-title{
+  font-size:17px;
+  font-weight:bold;
+  margin:4px 0;
+}
+
+.receipt-section-title{
+  font-weight:bold;
+  margin:5px 0;
+}
+
+.receipt-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  column-gap:20px;
+  row-gap:3px;
+  margin:5px 0;
+}
+
+.receipt-meta div{
+  word-break:break-word;
+}
+
+.receipt-items{
+  width:100%;
+  border-collapse:collapse;
+  margin:4px 0;
+  font-family:"Courier New",Courier,monospace;
+  font-size:11px;
+}
+
+.receipt-items th,
+.receipt-items td{
+  border:0;
+  padding:2px 3px;
+  color:#000;
+  background:#fff;
+}
+
+.receipt-items thead tr{
+  border-top:1px dashed #000;
+  border-bottom:1px dashed #000;
+}
+
+.receipt-items th{
+  font-weight:bold;
+  text-align:left;
+}
+
+.receipt-items .description{
+  width:54%;
+}
+
+.receipt-items .qty{
+  width:8%;
+  text-align:center;
+}
+
+.receipt-items .rate{
+  width:18%;
+  text-align:right;
+}
+
+.receipt-items .total{
+  width:20%;
+  text-align:right;
+}
+
+.receipt-summary{
+  width:100%;
+  margin-top:4px;
+}
+
+.receipt-summary-row{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:2px 0;
+}
+
+.receipt-summary-row span:first-child{
+  flex:1;
+}
+
+.receipt-summary-row span:last-child{
+  width:180px;
+  text-align:right;
+}
+
+.receipt-total{
+  font-weight:bold;
+  font-size:14px;
+}
+
+.receipt-signatures{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  margin-top:18px;
+}
+
+.receipt-thanks{
+  text-align:center;
+  margin-top:15px;
+  font-size:11px;
+}
+
+
+/* =========================================================
+   PRINT A4 - EXACTLY ONE PAGE
+   ========================================================= */
+
+@media print{
+
+  html,
+  body{
+    width:210mm;
+    height:297mm;
+    margin:0 !important;
+    padding:0 !important;
+    background:#fff !important;
+  }
+
+  body{
+    overflow:hidden !important;
+  }
+
+  .container{
+    display:none !important;
+  }
+
+  .invoice-print,
+  .receipt-print{
+    display:none !important;
+  }
+
+  /* INVOICE */
+
+  body.print-invoice .invoice-print{
+    display:block !important;
+    width:210mm !important;
+    height:297mm !important;
+    max-height:297mm !important;
+    margin:0 !important;
+    padding:7mm 9mm !important;
+    background:#fff !important;
+    color:#000 !important;
+    overflow:hidden !important;
+  }
+
+  /* RECEIPT */
+
+  body.print-receipt .receipt-print{
+    display:block !important;
+    width:210mm !important;
+    height:297mm !important;
+    min-height:297mm !important;
+    max-height:297mm !important;
+    margin:0 !important;
+    padding:8mm 10mm !important;
+    background:#fff !important;
+    color:#000 !important;
+    overflow:hidden !important;
+  }
+
+  @page{
+    size:A4 portrait;
+    margin:0;
+  }
+
+  body.print-invoice table{
+    margin-top:4px;
+  }
+
+  body.print-invoice th,
+  body.print-invoice td{
+    padding:3px 4px;
+  }
+
+  body.print-invoice h3{
+    margin-top:5px;
+    margin-bottom:2px;
+  }
+
+  body.print-invoice hr{
+    margin:4px 0 !important;
+  }
+
+  body.print-receipt .receipt-document{
+    font-size:11px !important;
+    line-height:1.2 !important;
+  }
+
+  body.print-receipt .receipt-hospital{
+    font-size:18px !important;
+  }
+
+  body.print-receipt .receipt-title{
+    font-size:16px !important;
+  }
+
+  body.print-receipt .receipt-meta{
+    margin:4px 0 !important;
+    row-gap:2px !important;
+  }
+
+  body.print-receipt .receipt-items{
+    font-size:10px !important;
+    margin:3px 0 !important;
+  }
+
+  body.print-receipt .receipt-items th,
+  body.print-receipt .receipt-items td{
+    padding:2px 3px !important;
+  }
+
+  body.print-receipt .receipt-summary{
+    margin-top:2px !important;
+  }
+
+  body.print-receipt .receipt-summary-row{
+    padding:1px 0 !important;
+  }
+
+  body.print-receipt .receipt-thanks{
+    margin-top:10px !important;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:850px){
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .receipt-print.screen-preview{
+    width:100%;
+    min-height:auto;
+    height:auto;
+    margin:10px 0;
+    padding:15px;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .container{
+    margin:0;
+    padding:12px;
+    border-radius:0;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  table{
+    font-size:12px;
+  }
+
+  .receipt-meta{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     MAIN FORM
+     ========================================================= -->
+
+<div class="container">
+
+
+  <!-- LOGO -->
+
+  <div class="logo-top">
+
+    <img
+      src="zeva.png"
+      alt="Zeva Medical Centre Logo">
+
+    <div class="facility-name">
+      ZEVA MEDICAL CENTRE
+    </div>
+
+  </div>
+
+
+  <h1>
+    Outpatient Patient &amp; Invoice Information
+  </h1>
+
+
+  <!-- PATIENT DETAILS -->
+
+  <div class="section">
+
+    <div class="section-title">
+      Patient Details
+    </div>
+
+
+    <div class="grid">
+
+
+      <div class="field">
+
+        <label>
+          Patient Name
+        </label>
+
+        <input
+          id="patientName"
+          type="text">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Patient Number
+        </label>
+
+        <input
+          id="patientNumber"
+          type="text">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Invoice Number
+        </label>
+
+        <input
+          id="invoiceNumber"
+          type="text">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Visit Number
+        </label>
+
+        <input
+          id="visitNumber"
+          type="text">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Age
+        </label>
+
+        <input
+          id="age"
+          type="number"
+          min="0">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Gender
+        </label>
+
+        <select id="gender">
+
+          <option value="">
+            Select
+          </option>
+
+          <option>
+            Male
+          </option>
+
+          <option>
+            Female
+          </option>
+
+          <option>
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Phone
+        </label>
+
+        <input
+          id="phone"
+          type="tel">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Visit Date
+        </label>
+
+        <input
+          id="visitDate"
+          type="date">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Doctor / Clinician
+        </label>
+
+        <input
+          id="doctor"
+          type="text">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Department
+        </label>
+
+        <select id="department">
+
+          <option>
+            General Outpatient
+          </option>
+
+          <option>
+            Paediatrics
+          </option>
+
+          <option>
+            Maternity
+          </option>
+
+          <option>
+            Dental
+          </option>
+
+          <option>
+            Eye Clinic
+          </option>
+
+          <option>
+            ENT
+          </option>
+
+          <option>
+            Physiotherapy
+          </option>
+
+          <option>
+            Emergency
+          </option>
+
+          <option>
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Payment Method
+        </label>
+
+        <select id="paymentMethod">
+
+          <option>
+            Cash
+          </option>
+
+          <option>
+            M-Pesa
+          </option>
+
+          <option>
+            Card
+          </option>
+
+          <option>
+            Insurance
+          </option>
+
+          <option>
+            SHA
+          </option>
+
+          <option>
+            Bank Transfer
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Insurance / SHA No.
+        </label>
+
+        <input
+          id="insurance"
+          type="text">
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       CHARGES
+       ===================================================== -->
+
+  <div class="section">
+
+    <div class="section-title">
+      Drugs &amp; Services
+    </div>
+
+
+    <table class="charge-table">
+
+      <thead>
+
+        <tr>
+
+          <th style="width:45%">
+            Description of Drugs / Services
+          </th>
+
+          <th style="width:12%">
+            Quantity
+          </th>
+
+          <th style="width:18%">
+            Unit Price
+          </th>
+
+          <th style="width:18%">
+            Amount
+          </th>
+
+          <th style="width:7%">
+            Action
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody id="chargesBody"></tbody>
+
+    </table>
+
+
+    <!-- OPTIONS -->
+
+    <datalist id="descriptionOptions">
+
+      <option value="Consultation">
+      <option value="Follow-up Consultation">
+      <option value="Specialist Consultation">
+      <option value="Emergency Consultation">
+      <option value="Doctor Review">
+      <option value="Nursing Care">
+      <option value="Vital Signs">
+      <option value="Injection Administration">
+      <option value="Wound Dressing">
+      <option value="Suturing">
+      <option value="Nebulization">
+      <option value="IV Cannulation">
+      <option value="IV Fluid Administration">
+      <option value="Catheterization">
+      <option value="Minor Surgery">
+      <option value="Medical Certificate">
+      <option value="Antenatal Consultation">
+      <option value="Family Planning">
+      <option value="Immunization">
+      <option value="Physiotherapy">
+      <option value="Dental Consultation">
+      <option value="Dental Extraction">
+      <option value="Nutrition Consultation">
+      <option value="Counselling">
+
+      <option value="Full Blood Count (FBC)">
+      <option value="Blood Sugar">
+      <option value="Random Blood Sugar">
+      <option value="Fasting Blood Sugar">
+      <option value="HbA1c">
+      <option value="Malaria Test">
+      <option value="HIV Test">
+      <option value="Urinalysis">
+      <option value="Pregnancy Test">
+      <option value="Blood Group">
+      <option value="ESR">
+      <option value="Liver Function Test">
+      <option value="Kidney Function Test">
+      <option value="Lipid Profile">
+      <option value="Urea">
+      <option value="Creatinine">
+      <option value="Electrolytes">
+      <option value="Stool Analysis">
+      <option value="Typhoid Test">
+      <option value="Hepatitis B Test">
+      <option value="Hepatitis C Test">
+      <option value="Syphilis Test">
+      <option value="Widal Test">
+
+      <option value="X-Ray">
+      <option value="Chest X-Ray">
+      <option value="Ultrasound">
+      <option value="Obstetric Ultrasound">
+      <option value="Pelvic Ultrasound">
+      <option value="Abdominal Ultrasound">
+      <option value="ECG">
+
+      <option value="Paracetamol">
+      <option value="Ibuprofen">
+      <option value="Diclofenac">
+      <option value="Amoxicillin">
+      <option value="Amoxicillin + Clavulanic Acid">
+      <option value="Azithromycin">
+      <option value="Ciprofloxacin">
+      <option value="Metronidazole">
+      <option value="Ceftriaxone">
+      <option value="Doxycycline">
+      <option value="Artemether / Lumefantrine">
+      <option value="ORS">
+      <option value="Zinc">
+      <option value="Omeprazole">
+      <option value="Pantoprazole">
+      <option value="Cetirizine">
+      <option value="Loratadine">
+      <option value="Salbutamol">
+      <option value="Prednisolone">
+      <option value="Hydrocortisone">
+      <option value="Ferrous Sulphate">
+      <option value="Folic Acid">
+      <option value="Multivitamins">
+      <option value="Insulin">
+      <option value="Normal Saline">
+      <option value="Ringer's Lactate">
+      <option value="Dextrose 5%">
+      <option value="Dextrose 10%">
+      <option value="Dextrose 50%">
+
+      <option value="Syringe">
+      <option value="Needle">
+      <option value="Cannula">
+      <option value="Gloves">
+      <option value="Face Mask">
+      <option value="Gauze">
+      <option value="Cotton Wool">
+      <option value="Plaster">
+      <option value="Bandage">
+      <option value="Alcohol Swab">
+      <option value="IV Giving Set">
+      <option value="Urine Bag">
+      <option value="Catheter">
+      <option value="Suture Material">
+      <option value="Other Medical Consumable">
+
+    </datalist>
+
+
+    <button
+      class="btn btn-primary"
+      type="button"
+      onclick="addRow()">
+
+      + Add Drug / Service
+
+    </button>
+
+
+    <div class="small" style="margin-top:5px">
+
+      Each new charge is automatically placed on the next row.
+      Press Enter in the last charge field to create another row.
+
+    </div>
+
+
+    <!-- TOTALS -->
+
+    <div class="total-box">
+
+
+      <div class="total-row">
+
+        <span>
+          Subtotal
+        </span>
+
+        <strong id="subtotal">
+          0.00
+        </strong>
+
+      </div>
+
+
+      <div
+        class="grid"
+        style="grid-template-columns:1fr 1fr;margin-top:10px">
+
+
+        <div class="field">
+
+          <label>
+            Discount
+          </label>
+
+          <input
+            id="discount"
+            type="number"
+            min="0"
+            step="0.01"
+            value="0"
+            oninput="calculateTotals()">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Tax %
+          </label>
+
+          <input
+            id="taxRate"
+            type="number"
+            min="0"
+            step="0.01"
+            value="0"
+            oninput="calculateTotals()">
+
+        </div>
+
+
+      </div>
+
+
+      <div class="total-row">
+
+        <span>
+          Tax
+        </span>
+
+        <strong id="taxAmount">
+          0.00
+        </strong>
+
+      </div>
+
+
+      <div class="total-row grand">
+
+        <span>
+          Grand Total
+        </span>
+
+        <strong id="grandTotal">
+          0.00
+        </strong>
+
+      </div>
+
+
+      <!-- AMOUNT PAID AUTOMATICALLY EQUALS TOTAL -->
+
+      <div
+        class="field"
+        style="margin-top:10px">
+
+        <label>
+          Amount Paid
+        </label>
+
+        <input
+          id="amountPaid"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0"
+          readonly
+          style="background:#f1f5f9;font-weight:bold;">
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       LOCAL STORAGE
+       ===================================================== -->
+
+  <div class="storage-box">
+
+    <div class="storage-title">
+      Local Storage / Saved Patient Details
+    </div>
+
+
+    <div class="small">
+
+      Save patient invoices in this browser.
+      You can load, delete, or download each patient's details individually.
+
+    </div>
+
+
+    <div class="actions">
+
+
+      <button
+        class="btn btn-success"
+        type="button"
+        onclick="saveCurrentPatient()">
+
+        Save Patient Details
+
+      </button>
+
+
+      <button
+        class="btn btn-primary"
+        type="button"
+        onclick="downloadAllPatientsExcel()">
+
+        Download All Patients Excel
+
+      </button>
+
+
+      <button
+        class="btn btn-danger"
+        type="button"
+        onclick="clearSavedPatients()">
+
+        Clear All Saved Patients
+
+      </button>
+
+
+    </div>
+
+
+    <div class="saved-table">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Patient Name
+            </th>
+
+            <th>
+              Patient No.
+            </th>
+
+            <th>
+              Invoice No.
+            </th>
+
+            <th>
+              Date
+            </th>
+
+            <th>
+              Total
+            </th>
+
+            <th>
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody id="savedPatientsBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <!-- NOTES -->
+
+  <div class="section">
+
+    <div class="section-title">
+      Notes
+    </div>
+
+
+    <textarea
+      id="notes"
+      placeholder="Enter any additional notes..."></textarea>
+
+  </div>
+
+
+  <!-- BUTTONS -->
+
+  <div class="actions">
+
+
+    <button
+      class="btn btn-success"
+      type="button"
+      onclick="saveCurrentPatient()">
+
+      Save Patient
+
+    </button>
+
+
+    <button
+      class="btn btn-primary"
+      type="button"
+      onclick="generateInvoice()">
+
+      Generate Invoice
+
+    </button>
+
+
+    <button
+      class="btn btn-primary"
+      type="button"
+      onclick="printInvoice()">
+
+      Print Invoice
+
+    </button>
+
+
+    <button
+      class="btn btn-warning"
+      type="button"
+      onclick="generateReceipt()">
+
+      Generate Receipt
+
+    </button>
+
+
+    <button
+      class="btn btn-success"
+      type="button"
+      onclick="printReceipt()">
+
+      Print Receipt
+
+    </button>
+
+
+    <button
+      class="btn btn-secondary"
+      type="button"
+      onclick="clearForm()">
+
+      Clear Form
+
+    </button>
+
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     PRINTABLE A4 INVOICE
+     ========================================================= -->
+
+<div
+  class="invoice-print"
+  id="invoicePrint">
+
+
+  <div style="text-align:center">
+
+    <img
+      src="zeva.png"
+      alt="Zeva Medical Centre Logo"
+      style="width:70px;height:70px;object-fit:contain;">
+
+    <div
+      style="
+        font-size:21px;
+        font-weight:bold;
+        color:#0066b3;
+      ">
+
+      ZEVA MEDICAL CENTRE
+
+    </div>
+
+
+    <div
+      style="
+        font-size:17px;
+        font-weight:bold;
+        margin-top:3px;
+      ">
+
+      OUTPATIENT INVOICE
+
+    </div>
+
+  </div>
+
+
+  <hr style="margin:5px 0">
+
+
+  <div
+    style="
+      display:flex;
+      justify-content:space-between;
+      font-size:10px;
+      line-height:1.25;
+    ">
+
+
+    <div>
+
+      <strong>ZEVA MEDICAL CENTRE</strong><br>
+
+      P.O. Box 1722-40200<br>
+
+      Tel: 0708534991<br>
+
+      Email: zevaMedicalcentre@gmail.com
+
+    </div>
+
+
+    <div style="text-align:right">
+
+      <strong>SHA</strong><br>
+
+      Afya House, Cathedral Road,
+      Upper Hill, Nairobi<br>
+
+      P.O. Box 30016–00100,
+      Nairobi<br>
+
+      Hotline: +254 800 720 601<br>
+
+      info@sha.go.ke
+
+    </div>
+
+  </div>
+
+
+  <hr style="margin:5px 0">
+
+
+  <table
+    style="
+      margin-top:5px;
+      font-size:10px;
+    ">
+
+
+    <tr>
+
+      <td><strong>Invoice No.</strong></td>
+
+      <td id="pInvoiceNumber"></td>
+
+      <td><strong>Visit Date</strong></td>
+
+      <td id="pVisitDate"></td>
+
+    </tr>
+
+
+    <tr>
+
+      <td><strong>Patient Name</strong></td>
+
+      <td id="pPatientName"></td>
+
+      <td><strong>Patient No.</strong></td>
+
+      <td id="pPatientNumber"></td>
+
+    </tr>
+
+
+    <tr>
+
+      <td><strong>Visit No.</strong></td>
+
+      <td id="pVisitNumber"></td>
+
+      <td><strong>Age / Gender</strong></td>
+
+      <td>
+        <span id="pAge"></span>
+        /
+        <span id="pGender"></span>
+      </td>
+
+    </tr>
+
+
+    <tr>
+
+      <td><strong>Phone</strong></td>
+
+      <td id="pPhone"></td>
+
+      <td><strong>Doctor / Clinician</strong></td>
+
+      <td id="pDoctor"></td>
+
+    </tr>
+
+
+    <tr>
+
+      <td><strong>Department</strong></td>
+
+      <td id="pDepartment"></td>
+
+      <td><strong>Payment Method</strong></td>
+
+      <td id="pPaymentMethod"></td>
+
+    </tr>
+
+
+    <tr>
+
+      <td><strong>Insurance / SHA No.</strong></td>
+
+      <td colspan="3" id="pInsurance"></td>
+
+    </tr>
+
+
+  </table>
+
+
+  <h3
+    style="
+      margin:5px 0 2px;
+      font-size:13px;
+    ">
+
+    Charges
+
+  </h3>
+
+
+  <table
+    style="
+      font-size:10px;
+      margin-top:3px;
+    ">
+
+
+    <thead>
+
+      <tr>
+
+        <th>No.</th>
+        <th>Description</th>
+        <th>Qty</th>
+        <th>Unit Price</th>
+        <th>Amount</th>
+
+      </tr>
+
+    </thead>
+
+
+    <tbody id="pChargesBody"></tbody>
+
+
+  </table>
+
+
+  <table
+    style="
+      width:100%;
+      margin-top:5px;
+      font-size:10px;
+    ">
+
+
+    <tr>
+
+      <td
+        style="text-align:right;border:0;">
+
+        <strong>Subtotal:</strong>
+
+      </td>
+
+      <td
+        style="width:25%;border:0;"
+        id="pSubtotal">
+
+      </td>
+
+    </tr>
+
+
+    <tr>
+
+      <td
+        style="text-align:right;border:0;">
+
+        <strong>Discount:</strong>
+
+      </td>
+
+      <td
+        style="border:0"
+        id="pDiscount">
+
+      </td>
+
+    </tr>
+
+
+    <tr>
+
+      <td
+        style="text-align:right;border:0;">
+
+        <strong>Tax:</strong>
+
+      </td>
+
+      <td
+        style="border:0"
+        id="pTax">
+
+      </td>
+
+    </tr>
+
+
+    <tr>
+
+      <td
+        style="
+          text-align:right;
+          border:0;
+          font-size:13px;
+        ">
+
+        <strong>GRAND TOTAL:</strong>
+
+      </td>
+
+      <td
+        style="
+          border:0;
+          font-size:13px;
+          font-weight:bold;
+        "
+        id="pGrandTotal">
+
+      </td>
+
+    </tr>
+
+
+    <tr>
+
+      <td
+        style="text-align:right;border:0;">
+
+        <strong>Amount Paid:</strong>
+
+      </td>
+
+      <td
+        style="border:0"
+        id="pAmountPaid">
+
+      </td>
+
+    </tr>
+
+
+  </table>
+
+
+  <div
+    style="
+      margin-top:6px;
+      font-size:10px;
+    ">
+
+    <strong>Notes:</strong>
+
+    <div
+      id="pNotes"
+      style="
+        min-height:30px;
+        border:1px solid #ccc;
+        padding:4px;
+        margin-top:2px;
+      ">
+    </div>
+
+  </div>
+
+
+  <div
+    style="
+      display:flex;
+      justify-content:center;
+      margin-top:20px;
+    ">
+
+    <div
+      style="
+        width:260px;
+        text-align:center;
+        font-size:10px;
+      ">
+
+      <div style="height:20px;"></div>
+
+      <div
+        style="
+          border-top:1px solid #000;
+          padding-top:3px;
+        ">
+
+        Authorized Officer /
+        Clinician Signature
+
+      </div>
+
+      <div style="margin-top:4px;">
+        Name: ______________________
+      </div>
+
+      <div style="margin-top:4px;">
+        Date: _______________________
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    style="
+      text-align:center;
+      margin-top:10px;
+      font-size:9px;
+    ">
+
+    <strong>ZEVA MEDICAL CENTRE</strong>
+
+    <br>
+
+    Thank you for choosing
+    Zeva Medical Centre.
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     PRINTABLE A4 RECEIPT
+     ========================================================= -->
+
+<div
+  class="receipt-print"
+  id="receiptPrint">
+
+  <div class="receipt-document">
+
+
+    <div class="receipt-line">
+============================================================
+    </div>
+
+
+    <div class="receipt-center receipt-hospital">
+      ZEVA MEDICAL CENTRE
+    </div>
+
+
+    <div class="receipt-center">
+      P.O. Box 1722-40200, Kenya
+    </div>
+
+
+    <div class="receipt-center">
+      Tel: 0708534991 | Email: zevaMedicalcentre@gmail.com
+    </div>
+
+
+    <div class="receipt-line">
+============================================================
+    </div>
+
+
+    <div class="receipt-center receipt-title">
+      OFFICIAL PAYMENT RECEIPT
+    </div>
+
+
+    <div class="receipt-line">
+------------------------------------------------------------
+    </div>
+
+
+    <div class="receipt-meta">
+
+      <div>
+        Receipt No:
+        <span id="rReceiptNumber"></span>
+      </div>
+
+      <div>
+        Date:
+        <span id="rDate"></span>
+      </div>
+
+      <div>
+        Invoice Ref:
+        <span id="rInvoiceNumber"></span>
+      </div>
+
+      <div>
+        Payment Mode:
+        <span id="rPaymentMethod"></span>
+      </div>
+
+      <div>
+        Visit No:
+        <span id="rVisitNumber"></span>
+      </div>
+
+      <div>
+        Transaction ID:
+        __________________
+      </div>
+
+    </div>
+
+
+    <div class="receipt-line">
+------------------------------------------------------------
+    </div>
+
+
+    <div class="receipt-section-title">
+      PATIENT INFORMATION:
+    </div>
+
+
+    <div class="receipt-meta">
+
+      <div>
+        Name:
+        <span id="rPatientName"></span>
+      </div>
+
+      <div>
+        Patient ID:
+        <span id="rPatientNumber"></span>
+      </div>
+
+      <div>
+        Phone:
+        <span id="rPhone"></span>
+      </div>
+
+      <div>
+        Age / Gender:
+        <span id="rAgeGender"></span>
+      </div>
+
+      <div>
+        Doctor / Clinician:
+        <span id="rDoctor"></span>
+      </div>
+
+      <div>
+        Department:
+        <span id="rDepartment"></span>
+      </div>
+
+    </div>
+
+
+    <div class="receipt-line">
+------------------------------------------------------------
+    </div>
+
+
+    <div class="receipt-section-title">
+      ITEMIZED SERVICES &amp; CHARGES:
+    </div>
+
+
+    <div class="receipt-line">
+------------------------------------------------------------
+    </div>
+
+
+    <table class="receipt-items">
+
+      <thead>
+
+        <tr>
+
+          <th class="description">
+            Description
+          </th>
+
+          <th class="qty">
+            Qty
+          </th>
+
+          <th class="rate">
+            Rate (KSh)
+          </th>
+
+          <th class="total">
+            Total (KSh)
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody id="rChargesBody"></tbody>
+
+    </table>
+
+
+    <div class="receipt-line">
+------------------------------------------------------------
+    </div>
+
+
+    <div class="receipt-summary">
+
+      <div class="receipt-summary-row">
+
+        <span>
+          Subtotal:
+        </span>
+
+        <span>
+          KSh
+          <span id="rSubtotal">0.00</span>
+        </span>
+
+      </div>
+
+
+      <div class="receipt-summary-row">
+
+        <span>
+          Discount:
+        </span>
+
+        <span>
+          KSh
+          <span id="rDiscount">0.00</span>
+        </span>
+
+      </div>
+
+
+      <div class="receipt-summary-row">
+
+        <span>
+          Tax (<span id="rTaxRate">0</span>%):
+        </span>
+
+        <span>
+          KSh
+          <span id="rTax">0.00</span>
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="receipt-line">
+------------------------------------------------------------
+    </div>
+
+
+    <div class="receipt-summary">
+
+      <div
+        class="receipt-summary-row receipt-total">
+
+        <span>
+          TOTAL AMOUNT BILLED:
+        </span>
+
+        <span>
+          KSh
+          <span id="rGrandTotal">0.00</span>
+        </span>
+
+      </div>
+
+
+      <div
+        class="receipt-summary-row receipt-total">
+
+        <span>
+          AMOUNT PAID:
+        </span>
+
+        <span>
+          KSh
+          <span id="rAmountPaid">0.00</span>
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="receipt-line">
+============================================================
+    </div>
+
+
+    <div style="margin-top:14px">
+
+      Received By:
+      ______________________________
+
+    </div>
+
+
+    <div style="margin-top:10px">
+
+      Signature:
+      ______________________________
+
+    </div>
+
+
+    <div class="receipt-thanks">
+
+      <strong>
+        Thank you for trusting
+        ZEVA MEDICAL CENTRE
+        with your health!
+      </strong>
+
+      <br><br>
+
+      Keep this receipt for your
+      insurance or tax records.
+
+    </div>
+
+
+    <div
+      class="receipt-line"
+      style="margin-top:10px">
+
+============================================================
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+   ========================================================= */
+
+const STORAGE_KEY =
+  "zevaOutpatientInvoices";
+
+let currentReceiptNumber = "";
+
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+
+function el(id){
+  return document.getElementById(id);
+}
+
+
+function money(value){
+  return Number(value || 0).toFixed(2);
+}
+
+
+function todayDate(){
+  return new Date()
+    .toISOString()
+    .split("T")[0];
+}
+
+
+function formatDate(value){
+
+  if(!value){
+    return "";
+  }
+
+  const parts =
+    String(value).split("-");
+
+  if(parts.length !== 3){
+    return value;
+  }
+
+  return (
+    parts[2] +
+    "/" +
+    parts[1] +
+    "/" +
+    parts[0]
+  );
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHtml(value){
+
+  return String(value)
+
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* =========================================================
+   RECEIPT NUMBER
+   ========================================================= */
+
+function createReceiptNumber(){
+
+  const year =
+    new Date().getFullYear();
+
+  const number =
+    Math.floor(
+      1000 +
+      Math.random() * 9000
+    );
+
+  return (
+    "RCP-" +
+    year +
+    "-" +
+    number
+  );
+}
+
+
+/* =========================================================
+   ADD CHARGE ROW
+   ========================================================= */
+
+function addRow(data = {}){
+
+  const tbody =
+    el("chargesBody");
+
+  const tr =
+    document.createElement("tr");
+
+  tr.innerHTML = `
+
+    <td>
+
+      <input
+        class="description-input"
+        list="descriptionOptions"
+        type="text"
+        value="${escapeHtml(
+          data.description || ""
+        )}"
+        placeholder="Select or type drug/service">
+
+    </td>
+
+
+    <td>
+
+      <input
+        class="qty-input"
+        type="number"
+        min="0"
+        step="0.01"
+        value="${data.qty ?? 1}">
+
+    </td>
+
+
+    <td>
+
+      <input
+        class="amount-input"
+        type="number"
+        min="0"
+        step="0.01"
+        value="${data.unitPrice ?? 0}">
+
+    </td>
+
+
+    <td class="row-total">
+      0.00
+    </td>
+
+
+    <td>
+
+      <button
+        class="btn btn-danger"
+        type="button"
+        onclick="removeChargeRow(this)">
+
+        X
+
+      </button>
+
+    </td>
+
+  `;
+
+
+  tbody.appendChild(tr);
+
+
+  const inputs =
+    tr.querySelectorAll("input");
+
+
+  inputs.forEach(input => {
+
+    input.addEventListener(
+      "input",
+      function(){
+
+        calculateRows();
+
+        /*
+         Automatically create a new row
+         when the user starts filling the
+         last existing row.
+        */
+
+        autoAddLastRow();
+
+      }
+    );
+
+
+    input.addEventListener(
+      "keydown",
+      function(event){
+
+        if(event.key === "Enter"){
+
+          event.preventDefault();
+
+          const rows =
+            Array.from(
+              tbody.querySelectorAll("tr")
+            );
+
+          const lastRow =
+            rows[rows.length - 1];
+
+          if(lastRow === tr){
+
+            addRow();
+
+            const newRows =
+              tbody.querySelectorAll("tr");
+
+            const newRow =
+              newRows[
+                newRows.length - 1
+              ];
+
+            const newDescription =
+              newRow.querySelector(
+                ".description-input"
+              );
+
+            if(newDescription){
+              newDescription.focus();
+            }
+
+          }
+
+        }
+
+      }
+    );
+
+  });
+
+
+  calculateRows();
+
+}
+
+
+/* =========================================================
+   AUTOMATICALLY ADD LAST ROW
+   ========================================================= */
+
+function autoAddLastRow(){
+
+  const tbody =
+    el("chargesBody");
+
+  const rows =
+    tbody.querySelectorAll("tr");
+
+  if(rows.length === 0){
+    addRow();
+    return;
+  }
+
+  const lastRow =
+    rows[rows.length - 1];
+
+  const description =
+    lastRow.querySelector(
+      ".description-input"
+    )?.value.trim() || "";
+
+  const qty =
+    lastRow.querySelector(
+      ".qty-input"
+    )?.value || "";
+
+  const unit =
+    lastRow.querySelector(
+      ".amount-input"
+    )?.value || "";
+
+  /*
+     Only create another row when
+     the last row has actually been used.
+  */
+
+  if(
+    description !== "" ||
+    Number(qty) > 0 ||
+    Number(unit) > 0
+  ){
+
+    if(
+      !lastRow.dataset.autoCreated
+    ){
+
+      lastRow.dataset.autoCreated =
+        "true";
+
+      addRow();
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   REMOVE CHARGE ROW
+   ========================================================= */
+
+function removeChargeRow(button){
+
+  const tbody =
+    el("chargesBody");
+
+  const row =
+    button.closest("tr");
+
+  if(row){
+    row.remove();
+  }
+
+  if(
+    tbody.querySelectorAll("tr").length === 0
+  ){
+    addRow();
+  }
+
+  calculateRows();
+
+}
+
+
+/* =========================================================
+   CALCULATE ROWS
+   ========================================================= */
+
+function calculateRows(){
+
+  let subtotal = 0;
+
+  document
+    .querySelectorAll(
+      "#chargesBody tr"
+    )
+    .forEach(row => {
+
+      const qty =
+        Number(
+          row.querySelector(
+            ".qty-input"
+          )?.value || 0
+        );
+
+      const unit =
+        Number(
+          row.querySelector(
+            ".amount-input"
+          )?.value || 0
+        );
+
+      const amount =
+        qty * unit;
+
+      const total =
+        row.querySelector(
+          ".row-total"
+        );
+
+      if(total){
+        total.textContent =
+          money(amount);
+      }
+
+      subtotal += amount;
+
+    });
+
+
+  el("subtotal").textContent =
+    money(subtotal);
+
+  calculateTotals();
+
+}
+
+
+/* =========================================================
+   GET CHARGES
+   ========================================================= */
+
+function getCharges(){
+
+  const charges = [];
+
+  document
+    .querySelectorAll(
+      "#chargesBody tr"
+    )
+    .forEach(row => {
+
+      const description =
+        row.querySelector(
+          ".description-input"
+        )?.value.trim() || "";
+
+      const qty =
+        Number(
+          row.querySelector(
+            ".qty-input"
+          )?.value || 0
+        );
+
+      const unitPrice =
+        Number(
+          row.querySelector(
+            ".amount-input"
+          )?.value || 0
+        );
+
+      if(
+        description ||
+        qty ||
+        unitPrice
+      ){
+
+        charges.push({
+
+          description,
+
+          qty,
+
+          unitPrice,
+
+          amount:
+            qty * unitPrice
+
+        });
+
+      }
+
+    });
+
+  return charges;
+
+}
+
+
+/* =========================================================
+   CALCULATE TOTALS
+   ========================================================= */
+
+function calculateTotals(){
+
+  const charges =
+    getCharges();
+
+
+  const subtotal =
+    charges.reduce(
+      (sum,item) =>
+        sum +
+        Number(item.amount || 0),
+      0
+    );
+
+
+  const discount =
+    Math.max(
+      0,
+      Number(
+        el("discount").value || 0
+      )
+    );
+
+
+  const taxRate =
+    Math.max(
+      0,
+      Number(
+        el("taxRate").value || 0
+      )
+    );
+
+
+  const taxable =
+    Math.max(
+      0,
+      subtotal - discount
+    );
+
+
+  const tax =
+    taxable *
+    taxRate /
+    100;
+
+
+  const grandTotal =
+    taxable + tax;
+
+
+  /*
+     AMOUNT PAID IS ALWAYS THE TOTAL.
+     NO BALANCE IS CALCULATED.
+  */
+
+  const amountPaid =
+    grandTotal;
+
+
+  el("subtotal").textContent =
+    money(subtotal);
+
+
+  el("taxAmount").textContent =
+    money(tax);
+
+
+  el("grandTotal").textContent =
+    money(grandTotal);
+
+
+  el("amountPaid").value =
+    money(amountPaid);
+
+}
+
+
+/* =========================================================
+   CURRENT RECORD
+   ========================================================= */
+
+function currentRecord(){
+
+  const charges =
+    getCharges();
+
+
+  const subtotal =
+    charges.reduce(
+      (sum,item) =>
+        sum +
+        Number(item.amount || 0),
+      0
+    );
+
+
+  const discount =
+    Math.max(
+      0,
+      Number(
+        el("discount").value || 0
+      )
+    );
+
+
+  const taxRate =
+    Math.max(
+      0,
+      Number(
+        el("taxRate").value || 0
+      )
+    );
+
+
+  const taxable =
+    Math.max(
+      0,
+      subtotal - discount
+    );
+
+
+  const tax =
+    taxable *
+    taxRate /
+    100;
+
+
+  const grandTotal =
+    taxable + tax;
+
+
+  /*
+     Amount paid always equals total.
+  */
+
+  const amountPaid =
+    grandTotal;
+
+
+  return {
+
+    id:
+      Date.now().toString(),
+
+    patientName:
+      el("patientName").value.trim(),
+
+    patientNumber:
+      el("patientNumber").value.trim(),
+
+    invoiceNumber:
+      el("invoiceNumber").value.trim(),
+
+    visitNumber:
+      el("visitNumber").value.trim(),
+
+    age:
+      el("age").value,
+
+    gender:
+      el("gender").value,
+
+    phone:
+      el("phone").value.trim(),
+
+    visitDate:
+      el("visitDate").value,
+
+    doctor:
+      el("doctor").value.trim(),
+
+    department:
+      el("department").value,
+
+    paymentMethod:
+      el("paymentMethod").value,
+
+    insurance:
+      el("insurance").value.trim(),
+
+    charges,
+
+    discount,
+
+    taxRate,
+
+    subtotal,
+
+    tax,
+
+    grandTotal,
+
+    amountPaid,
+
+    notes:
+      el("notes").value.trim(),
+
+    savedAt:
+      new Date().toISOString()
+
+  };
+
+}
+
+
+/* =========================================================
+   SAVE PATIENT
+   ========================================================= */
+
+function saveCurrentPatient(){
+
+  const record =
+    currentRecord();
+
+
+  if(!record.patientName){
+
+    alert(
+      "Please enter the patient name."
+    );
+
+    return;
+
+  }
+
+
+  let records =
+    JSON.parse(
+      localStorage.getItem(
+        STORAGE_KEY
+      ) || "[]"
+    );
+
+
+  const existingIndex =
+    records.findIndex(
+      r =>
+        r.invoiceNumber &&
+        record.invoiceNumber &&
+        r.invoiceNumber ===
+        record.invoiceNumber
+    );
+
+
+  if(existingIndex >= 0){
+
+    record.id =
+      records[existingIndex].id;
+
+    records[existingIndex] =
+      record;
+
+  }else{
+
+    records.push(record);
+
+  }
+
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(records)
+  );
+
+
+  renderSavedPatients();
+
+
+  alert(
+    "Patient details saved successfully."
+  );
+
+}
+
+
+/* =========================================================
+   RENDER SAVED PATIENTS
+   ========================================================= */
+
+function renderSavedPatients(){
+
+  const tbody =
+    el("savedPatientsBody");
+
+  tbody.innerHTML = "";
+
+
+  const records =
+    JSON.parse(
+      localStorage.getItem(
+        STORAGE_KEY
+      ) || "[]"
+    );
+
+
+  if(records.length === 0){
+
+    tbody.innerHTML = `
+
+      <tr>
+
+        <td
+          colspan="6"
+          style="text-align:center">
+
+          No saved patient records.
+
+        </td>
+
+      </tr>
+
+    `;
+
+    return;
+
+  }
+
+
+  records.forEach(record => {
+
+    const tr =
+      document.createElement("tr");
+
+
+    tr.innerHTML = `
+
+      <td>
+        ${escapeHtml(
+          record.patientName || ""
+        )}
+      </td>
+
+
+      <td>
+        ${escapeHtml(
+          record.patientNumber || ""
+        )}
+      </td>
+
+
+      <td>
+        ${escapeHtml(
+          record.invoiceNumber || ""
+        )}
+      </td>
+
+
+      <td>
+        ${escapeHtml(
+          record.visitDate || ""
+        )}
+      </td>
+
+
+      <td>
+        ${money(
+          record.grandTotal
+        )}
+      </td>
+
+
+      <td>
+
+        <button
+          class="btn btn-primary"
+          type="button"
+          onclick="loadPatient('${record.id}')">
+
+          Load
+
+        </button>
+
+
+        <button
+          class="btn btn-success"
+          type="button"
+          onclick="downloadPatientExcel('${record.id}')">
+
+          Excel
+
+        </button>
+
+
+        <button
+          class="btn btn-danger"
+          type="button"
+          onclick="deletePatient('${record.id}')">
+
+          Delete
+
+        </button>
+
+      </td>
+
+    `;
+
+
+    tbody.appendChild(tr);
+
+  });
+
+}
+
+
+/* =========================================================
+   LOAD PATIENT
+   ========================================================= */
+
+function loadPatient(id){
+
+  const records =
+    JSON.parse(
+      localStorage.getItem(
+        STORAGE_KEY
+      ) || "[]"
+    );
+
+
+  const record =
+    records.find(
+      r => r.id === id
+    );
+
+
+  if(!record){
+
+    alert(
+      "Patient record not found."
+    );
+
+    return;
+
+  }
+
+
+  el("patientName").value =
+    record.patientName || "";
+
+  el("patientNumber").value =
+    record.patientNumber || "";
+
+  el("invoiceNumber").value =
+    record.invoiceNumber || "";
+
+  el("visitNumber").value =
+    record.visitNumber || "";
+
+  el("age").value =
+    record.age || "";
+
+  el("gender").value =
+    record.gender || "";
+
+  el("phone").value =
+    record.phone || "";
+
+  el("visitDate").value =
+    record.visitDate || "";
+
+  el("doctor").value =
+    record.doctor || "";
+
+  el("department").value =
+    record.department ||
+    "General Outpatient";
+
+  el("paymentMethod").value =
+    record.paymentMethod ||
+    "Cash";
+
+  el("insurance").value =
+    record.insurance || "";
+
+  el("discount").value =
+    record.discount || 0;
+
+  el("taxRate").value =
+    record.taxRate || 0;
+
+  /*
+     Amount paid is recalculated from
+     the total, not loaded independently.
+  */
+
+  el("amountPaid").value =
+    money(record.grandTotal || 0);
+
+  el("notes").value =
+    record.notes || "";
+
+
+  el("chargesBody").innerHTML =
+    "";
+
+
+  if(
+    record.charges &&
+    record.charges.length
+  ){
+
+    record.charges.forEach(
+      charge => {
+        addRow(charge);
+      }
+    );
+
+  }else{
+
+    addRow();
+
+  }
+
+
+  calculateRows();
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   DELETE PATIENT
+   ========================================================= */
+
+function deletePatient(id){
+
+  if(
+    !confirm(
+      "Delete this saved patient record?"
+    )
+  ){
+    return;
+  }
+
+
+  let records =
+    JSON.parse(
+      localStorage.getItem(
+        STORAGE_KEY
+      ) || "[]"
+    );
+
+
+  records =
+    records.filter(
+      record =>
+        record.id !== id
+    );
+
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(records)
+  );
+
+
+  renderSavedPatients();
+
+}
+
+
+/* =========================================================
+   CLEAR ALL SAVED
+   ========================================================= */
+
+function clearSavedPatients(){
+
+  if(
+    !confirm(
+      "Are you sure you want to delete ALL saved patient records?"
+    )
+  ){
+    return;
+  }
+
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+
+  renderSavedPatients();
+
+}
+
+
+/* =========================================================
+   GENERATE INVOICE
+   ========================================================= */
+
+function generateInvoice(){
+
+  const record =
+    currentRecord();
+
+
+  el("receiptPrint")
+    .classList.remove(
+      "screen-preview"
+    );
+
+
+  el("invoicePrint").style.display =
+    "block";
+
+
+  el("pInvoiceNumber").textContent =
+    record.invoiceNumber || "";
+
+  el("pVisitDate").textContent =
+    formatDate(record.visitDate);
+
+  el("pPatientName").textContent =
+    record.patientName;
+
+  el("pPatientNumber").textContent =
+    record.patientNumber;
+
+  el("pVisitNumber").textContent =
+    record.visitNumber;
+
+  el("pAge").textContent =
+    record.age;
+
+  el("pGender").textContent =
+    record.gender;
+
+  el("pPhone").textContent =
+    record.phone;
+
+  el("pDoctor").textContent =
+    record.doctor;
+
+  el("pDepartment").textContent =
+    record.department;
+
+  el("pPaymentMethod").textContent =
+    record.paymentMethod;
+
+  el("pInsurance").textContent =
+    record.insurance;
+
+
+  const tbody =
+    el("pChargesBody");
+
+  tbody.innerHTML = "";
+
+
+  record.charges.forEach(
+    (charge,index) => {
+
+      const tr =
+        document.createElement("tr");
+
+
+      tr.innerHTML = `
+
+        <td>
+          ${index + 1}
+        </td>
+
+        <td>
+          ${escapeHtml(
+            charge.description
+          )}
+        </td>
+
+        <td>
+          ${charge.qty}
+        </td>
+
+        <td>
+          ${money(
+            charge.unitPrice
+          )}
+        </td>
+
+        <td>
+          ${money(
+            charge.amount
+          )}
+        </td>
+
+      `;
+
+
+      tbody.appendChild(tr);
+
+    }
+  );
+
+
+  el("pSubtotal").textContent =
+    money(record.subtotal);
+
+  el("pDiscount").textContent =
+    money(record.discount);
+
+  el("pTax").textContent =
+    money(record.tax);
+
+  el("pGrandTotal").textContent =
+    money(record.grandTotal);
+
+  el("pAmountPaid").textContent =
+    money(record.amountPaid);
+
+  el("pNotes").textContent =
+    record.notes || "";
+
+
+  el("invoicePrint")
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+}
+
+
+/* =========================================================
+   PRINT INVOICE
+   ========================================================= */
+
+function printInvoice(){
+
+  generateInvoice();
+
+
+  document.body.classList.remove(
+    "print-receipt"
+  );
+
+
+  document.body.classList.add(
+    "print-invoice"
+  );
+
+
+  setTimeout(
+    function(){
+      window.print();
+    },
+    200
+  );
+
+}
+
+
+/* =========================================================
+   GENERATE RECEIPT
+   ========================================================= */
+
+function generateReceipt(){
+
+  const record =
+    currentRecord();
+
+
+  /*
+     Only create receipt number when
+     generating the receipt.
+  */
+
+  if(!currentReceiptNumber){
+    currentReceiptNumber =
+      createReceiptNumber();
+  }
+
+
+  el("invoicePrint").style.display =
+    "none";
+
+
+  el("receiptPrint")
+    .classList.add(
+      "screen-preview"
+    );
+
+
+  el("rReceiptNumber").textContent =
+    currentReceiptNumber;
+
+
+  el("rDate").textContent =
+    formatDate(
+      record.visitDate ||
+      todayDate()
+    );
+
+
+  el("rInvoiceNumber").textContent =
+    record.invoiceNumber ||
+    "---";
+
+
+  el("rPaymentMethod").textContent =
+    record.paymentMethod ||
+    "---";
+
+
+  el("rVisitNumber").textContent =
+    record.visitNumber ||
+    "---";
+
+
+  el("rPatientName").textContent =
+    record.patientName ||
+    "---";
+
+
+  el("rPatientNumber").textContent =
+    record.patientNumber ||
+    "---";
+
+
+  el("rPhone").textContent =
+    record.phone ||
+    "---";
+
+
+  el("rAgeGender").textContent =
+    (record.age || "---") +
+    " / " +
+    (record.gender || "---");
+
+
+  el("rDoctor").textContent =
+    record.doctor ||
+    "---";
+
+
+  el("rDepartment").textContent =
+    record.department ||
+    "---";
+
+
+  const tbody =
+    el("rChargesBody");
+
+  tbody.innerHTML = "";
+
+
+  if(record.charges.length === 0){
+
+    const tr =
+      document.createElement("tr");
+
+
+    tr.innerHTML = `
+
+      <td
+        colspan="4"
+        style="text-align:center">
+
+        No charges entered
+
+      </td>
+
+    `;
+
+
+    tbody.appendChild(tr);
+
+  }else{
+
+    record.charges.forEach(
+      charge => {
+
+        const tr =
+          document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+          <td class="description">
+
+            ${escapeHtml(
+              charge.description ||
+              "---"
+            )}
+
+          </td>
+
+
+          <td class="qty">
+
+            ${charge.qty}
+
+          </td>
+
+
+          <td class="rate">
+
+            ${money(
+              charge.unitPrice
+            )}
+
+          </td>
+
+
+          <td class="total">
+
+            ${money(
+              charge.amount
+            )}
+
+          </td>
+
+        `;
+
+
+        tbody.appendChild(tr);
+
+      }
+    );
+
+  }
+
+
+  el("rSubtotal").textContent =
+    money(record.subtotal);
+
+
+  el("rDiscount").textContent =
+    money(record.discount);
+
+
+  el("rTaxRate").textContent =
+    Number(record.taxRate || 0);
+
+
+  el("rTax").textContent =
+    money(record.tax);
+
+
+  el("rGrandTotal").textContent =
+    money(record.grandTotal);
+
+
+  /*
+     Amount paid is exactly the total.
+  */
+
+  el("rAmountPaid").textContent =
+    money(record.grandTotal);
+
+
+  el("receiptPrint")
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+}
+
+
+/* =========================================================
+   PRINT RECEIPT
+   ========================================================= */
+
+function printReceipt(){
+
+  generateReceipt();
+
+
+  document.body.classList.remove(
+    "print-invoice"
+  );
+
+
+  document.body.classList.add(
+    "print-receipt"
+  );
+
+
+  setTimeout(
+    function(){
+      window.print();
+    },
+    200
+  );
+
+}
+
+
+/* =========================================================
+   AFTER PRINT
+   ========================================================= */
+
+window.addEventListener(
+  "afterprint",
+  function(){
+
+    document.body.classList.remove(
+      "print-invoice",
+      "print-receipt"
+    );
+
+  }
+);
+
+
+/* =========================================================
+   CLEAR FORM
+   ========================================================= */
+
+function clearForm(){
+
+  if(
+    !confirm(
+      "Clear the current form?"
+    )
+  ){
+    return;
+  }
+
+
+  const ids = [
+
+    "patientName",
+    "patientNumber",
+    "invoiceNumber",
+    "visitNumber",
+    "age",
+    "phone",
+    "visitDate",
+    "doctor",
+    "insurance",
+    "notes"
+
+  ];
+
+
+  ids.forEach(
+    id => {
+      el(id).value = "";
+    }
+  );
+
+
+  el("gender").value =
+    "";
+
+
+  el("department").value =
+    "General Outpatient";
+
+
+  el("paymentMethod").value =
+    "Cash";
+
+
+  el("discount").value =
+    0;
+
+
+  el("taxRate").value =
+    0;
+
+
+  el("amountPaid").value =
+    0;
+
+
+  el("chargesBody").innerHTML =
+    "";
+
+
+  el("invoicePrint").style.display =
+    "none";
+
+
+  el("receiptPrint")
+    .classList.remove(
+      "screen-preview"
+    );
+
+
+  currentReceiptNumber =
+    "";
+
+
+  addRow();
+
+
+  calculateTotals();
+
+}
+
+
+/* =========================================================
+   EXCEL EXPORT
+   ========================================================= */
+
+function xmlEscape(value){
+
+  return String(value ?? "")
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/'/g,"&apos;");
+
+}
+
+
+function excelCell(value){
+
+  return `
+
+    <Cell>
+
+      <Data ss:Type="String">
+
+        ${xmlEscape(value)}
+
+      </Data>
+
+    </Cell>
+
+  `;
+
+}
+
+
+function createExcelXML(records){
+
+  let patientRows = "";
+
+
+  records.forEach(
+    record => {
+
+      patientRows += "<Row>";
+
+
+      patientRows +=
+        excelCell(
+          record.patientName
+        );
+
+      patientRows +=
+        excelCell(
+          record.patientNumber
+        );
+
+      patientRows +=
+        excelCell(
+          record.invoiceNumber
+        );
+
+      patientRows +=
+        excelCell(
+          record.visitNumber
+        );
+
+      patientRows +=
+        excelCell(
+          record.age
+        );
+
+      patientRows +=
+        excelCell(
+          record.gender
+        );
+
+      patientRows +=
+        excelCell(
+          record.phone
+        );
+
+      patientRows +=
+        excelCell(
+          record.visitDate
+        );
+
+      patientRows +=
+        excelCell(
+          record.doctor
+        );
+
+      patientRows +=
+        excelCell(
+          record.department
+        );
+
+      patientRows +=
+        excelCell(
+          record.paymentMethod
+        );
+
+      patientRows +=
+        excelCell(
+          record.insurance
+        );
+
+      patientRows +=
+        excelCell(
+          record.subtotal
+        );
+
+      patientRows +=
+        excelCell(
+          record.discount
+        );
+
+      patientRows +=
+        excelCell(
+          record.taxRate
+        );
+
+      patientRows +=
+        excelCell(
+          record.tax
+        );
+
+      patientRows +=
+        excelCell(
+          record.grandTotal
+        );
+
+      patientRows +=
+        excelCell(
+          record.amountPaid
+        );
+
+      patientRows +=
+        excelCell(
+          record.notes
+        );
+
+      patientRows +=
+        "</Row>";
+
+    }
+  );
+
+
+  let chargeRows = "";
+
+
+  records.forEach(
+    record => {
+
+      (
+        record.charges || []
+      ).forEach(
+        (charge,index) => {
+
+          chargeRows +=
+            "<Row>";
+
+
+          chargeRows +=
+            excelCell(
+              record.patientName
+            );
+
+
+          chargeRows +=
+            excelCell(
+              record.patientNumber
+            );
+
+
+          chargeRows +=
+            excelCell(
+              record.invoiceNumber
+            );
+
+
+          chargeRows +=
+            excelCell(
+              record.visitDate
+            );
+
+
+          chargeRows +=
+            excelCell(
+              index + 1
+            );
+
+
+          chargeRows +=
+            excelCell(
+              charge.description
+            );
+
+
+          chargeRows +=
+            excelCell(
+              charge.qty
+            );
+
+
+          chargeRows +=
+            excelCell(
+              charge.unitPrice
+            );
+
+
+          chargeRows +=
+            excelCell(
+              charge.amount
+            );
+
+
+          chargeRows +=
+            "</Row>";
+
+        }
+      );
+
+    }
+  );
+
+
+  return `<?xml version="1.0"?>
+
+<?mso-application progid="Excel.Sheet"?>
+
+<Workbook
+
+ xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+
+
+ <Worksheet ss:Name="Patient Invoices">
+
+  <Table>
+
+   <Row>
+
+    ${excelCell("Patient Name")}
+
+    ${excelCell("Patient Number")}
+
+    ${excelCell("Invoice Number")}
+
+    ${excelCell("Visit Number")}
+
+    ${excelCell("Age")}
+
+    ${excelCell("Gender")}
+
+    ${excelCell("Phone")}
+
+    ${excelCell("Visit Date")}
+
+    ${excelCell("Doctor / Clinician")}
+
+    ${excelCell("Department")}
+
+    ${excelCell("Payment Method")}
+
+    ${excelCell("Insurance / SHA No.")}
+
+    ${excelCell("Subtotal")}
+
+    ${excelCell("Discount")}
+
+    ${excelCell("Tax Rate")}
+
+    ${excelCell("Tax")}
+
+    ${excelCell("Grand Total")}
+
+    ${excelCell("Amount Paid")}
+
+    ${excelCell("Notes")}
+
+   </Row>
+
+   ${patientRows}
+
+  </Table>
+
+ </Worksheet>
+
+
+ <Worksheet ss:Name="Charge Details">
+
+  <Table>
+
+   <Row>
+
+    ${excelCell("Patient Name")}
+
+    ${excelCell("Patient Number")}
+
+    ${excelCell("Invoice Number")}
+
+    ${excelCell("Visit Date")}
+
+    ${excelCell("Item No.")}
+
+    ${excelCell("Description")}
+
+    ${excelCell("Quantity")}
+
+    ${excelCell("Unit Price")}
+
+    ${excelCell("Amount")}
+
+   </Row>
+
+   ${chargeRows}
+
+  </Table>
+
+ </Worksheet>
+
+
+</Workbook>`;
+
+}
+
+
+/* =========================================================
+   DOWNLOAD FILE
+   ========================================================= */
+
+function downloadFile(
+  filename,
+  content
+){
+
+  const blob =
+    new Blob(
+      [content],
+      {
+        type:
+          "application/vnd.ms-excel;charset=utf-8;"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const a =
+    document.createElement("a");
+
+
+  a.href =
+    url;
+
+
+  a.download =
+    filename;
+
+
+  document.body.appendChild(a);
+
+
+  a.click();
+
+
+  a.remove();
+
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   DOWNLOAD ALL PATIENTS
+   ========================================================= */
+
+function downloadAllPatientsExcel(){
+
+  const records =
+    JSON.parse(
+      localStorage.getItem(
+        STORAGE_KEY
+      ) || "[]"
+    );
+
+
+  if(
+    records.length === 0
+  ){
+
+    alert(
+      "There are no saved patient records to download."
+    );
+
+    return;
+
+  }
+
+
+  const xml =
+    createExcelXML(
+      records
+    );
+
+
+  downloadFile(
+    "Zeva_All_Outpatient_Patient_Invoices.xls",
+    xml
+  );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD ONE PATIENT
+   ========================================================= */
+
+function downloadPatientExcel(id){
+
+  const records =
+    JSON.parse(
+      localStorage.getItem(
+        STORAGE_KEY
+      ) || "[]"
+    );
+
+
+  const record =
+    records.find(
+      r => r.id === id
+    );
+
+
+  if(!record){
+
+    alert(
+      "Patient record not found."
+    );
+
+    return;
+
+  }
+
+
+  const xml =
+    createExcelXML(
+      [record]
+    );
+
+
+  const safeName =
+    (
+      record.patientName ||
+      "Patient"
+    )
+      .replace(
+        /[^a-z0-9]/gi,
+        "_"
+      );
+
+
+  downloadFile(
+    "Zeva_" +
+    safeName +
+    "_Outpatient_Invoice.xls",
+    xml
+  );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    /*
+       Invoice number stays blank.
+    */
+
+    el("invoiceNumber").value =
+      "";
+
+
+    /*
+       Today's date.
+    */
+
+    el("visitDate").value =
+      todayDate();
+
+
+    /*
+       First charge row.
+    */
+
+    addRow();
+
+
+    /*
+       Saved patients.
+    */
+
+    renderSavedPatients();
+
+
+    /*
+       Calculate totals.
+    */
+
+    calculateTotals();
+
+  }
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,3035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeva Medical Centre | Quality Healthcare</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  --blue: #0066b3;
+  --dark-blue: #004b87;
+  --light-blue: #eaf6ff;
+  --yellow: #f9c400;
+  --white: #ffffff;
+  --dark: #18344a;
+  --gray: #f5f7fa;
+}
+
+body {
+  background: var(--white);
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* ================= HEADER ================= */
+
+header {
+  background: var(--white);
+  border-bottom: 4px solid var(--yellow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 12px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logos {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 115px;
+  height: 115px;
+  object-fit: contain;
+}
+
+.hospital-name h1 {
+  color: var(--blue);
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.hospital-name p {
+  color: #666;
+  font-size: 13px;
+}
+
+.header-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 8px;
+}
+
+.header-contact a {
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header-contact a:hover {
+  color: var(--dark-blue);
+  text-decoration: underline;
+}
+
+/* ================= NAVIGATION ================= */
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: var(--blue);
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  min-height: 550px;
+  background:
+    linear-gradient(
+      rgba(0, 83, 148, 0.88),
+      rgba(0, 83, 148, 0.88)
+    ),
+    url("hospital.jpg") center/cover;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.hero-content {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  padding: 60px 25px;
+}
+
+.hero h2 {
+  font-size: 50px;
+  max-width: 750px;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.hero h2 span {
+  color: var(--yellow);
+}
+
+.hero p {
+  max-width: 650px;
+  font-size: 19px;
+  margin-bottom: 35px;
+  color: #f0f7ff;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn-yellow {
+  background: var(--yellow);
+  color: #17324d;
+}
+
+.btn-yellow:hover {
+  background: #ffd83d;
+  transform: translateY(-3px);
+}
+
+.btn-white {
+  background: white;
+  color: var(--blue);
+}
+
+.btn-white:hover {
+  background: #eaf6ff;
+  transform: translateY(-3px);
+}
+
+/* ================= QUICK SERVICES ================= */
+
+.quick-services {
+  max-width: 1100px;
+  margin: -55px auto 50px;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.quick-card {
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  border-top: 5px solid var(--yellow);
+}
+
+.quick-card .icon {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.quick-card h3 {
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+
+/* ================= SECTIONS ================= */
+
+section {
+  padding: 70px 20px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.section-title h2 {
+  color: var(--blue);
+  font-size: 34px;
+}
+
+.section-title .line {
+  width: 70px;
+  height: 4px;
+  background: var(--yellow);
+  margin: 12px auto;
+  border-radius: 5px;
+}
+
+.section-container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ================= SERVICES ================= */
+
+.services {
+  background: var(--gray);
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.service-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  border-left: 5px solid var(--blue);
+  box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+  transition: 0.3s;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  border-left-color: var(--yellow);
+}
+
+.service-card h3 {
+  color: var(--blue);
+  margin-bottom: 10px;
+}
+
+.service-icon {
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+
+/* ================= ABOUT ================= */
+
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.about h2 {
+  color: var(--blue);
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.about-image {
+  min-height: 330px;
+  border-radius: 15px;
+  background:
+    linear-gradient(
+      rgba(0, 102, 179, .2),
+      rgba(0, 102, 179, .2)
+    ),
+    url("hospital-about.jpg") center/cover;
+}
+
+/* ================= PATIENT REGISTRATION ================= */
+
+.registration-section {
+  display: none;
+  background: var(--gray);
+  padding: 60px 20px;
+}
+
+.registration-card {
+  max-width: 1100px;
+  margin: auto;
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.registration-card h2 {
+  color: var(--blue);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.registration-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.registration-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.registration-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.registration-field.full {
+  grid-column: 1 / -1;
+}
+
+.registration-field label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--dark);
+}
+
+.registration-field input,
+.registration-field select,
+.registration-field textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c7d2dc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+}
+
+.registration-field textarea {
+  min-height: 75px;
+  resize: vertical;
+}
+
+.registration-table-wrap {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.registration-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.registration-table th,
+.registration-table td {
+  border: 1px solid #c7d2dc;
+  padding: 8px;
+  vertical-align: top;
+}
+
+.registration-table th {
+  background: var(--blue);
+  color: white;
+  text-align: left;
+}
+
+.registration-table input,
+.registration-table textarea {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  padding: 6px;
+  font-size: 13px;
+}
+
+.registration-table textarea {
+  min-height: 60px;
+}
+
+.registration-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.reg-btn {
+  border: 0;
+  padding: 11px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.reg-primary {
+  background: var(--blue);
+  color: white;
+}
+
+.reg-success {
+  background: #168642;
+  color: white;
+}
+
+.reg-danger {
+  background: #c62828;
+  color: white;
+}
+
+.reg-gray {
+  background: #555;
+  color: white;
+}
+
+.reg-btn:hover {
+  opacity: 0.88;
+}
+
+.bmi-status {
+  margin-top: 5px;
+  font-weight: bold;
+  color: var(--blue);
+}
+
+.saved-patients {
+  margin-top: 25px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.saved-patient-card {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  background: #fafafa;
+}
+
+/* ================= CONTACT ================= */
+
+.contact {
+  background: var(--blue);
+  color: white;
+}
+
+.contact .section-title h2 {
+  color: white;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.contact-card {
+  text-align: center;
+  background: rgba(255,255,255,0.1);
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.contact-card h3 {
+  color: var(--yellow);
+  margin-bottom: 10px;
+}
+
+.contact-card a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contact-card a:hover {
+  text-decoration: underline;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+  background: #00365f;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+footer strong {
+  color: var(--yellow);
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 850px) {
+
+  .header-container {
+    flex-direction: column;
+  }
+
+  nav ul {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero h2 {
+    font-size: 38px;
+  }
+
+  .quick-services,
+  .service-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .about-image {
+    order: -1;
+  }
+
+  .registration-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .registration-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .registration-card {
+    padding: 15px;
+  }
+
+  .registration-table {
+    min-width: 750px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .logos {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo {
+    width: 105px;
+    height: 105px;
+  }
+
+  .header-contact {
+    justify-content: center;
+  }
+
+  .hero {
+    min-height: 500px;
+  }
+
+  .hero h2 {
+    font-size: 32px;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* ================= PRINT ================= */
+
+@media print {
+
+  body {
+    background: white;
+  }
+
+  header,
+  .hero,
+  .quick-services,
+  #services,
+  #about,
+  #contact,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  .registration-section {
+    display: block !important;
+    padding: 0;
+  }
+
+  .registration-card {
+    max-width: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .registration-table input,
+  .registration-table textarea {
+    border: none;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+  <div class="header-container">
+
+    <div class="logos">
+
+      <img
+        src="zeva.png"
+        alt="Zeva Medical Centre Logo"
+        class="logo"
+      >
+
+      <div class="hospital-name">
+
+        <h1>ZEVA MEDICAL CENTRE</h1>
+
+        <p>Your Health, Our Priority</p>
+
+        <div class="header-contact">
+
+          <a href="tel:0708534991">
+            📞 0708534991
+          </a>
+
+          <a href="mailto:zevamedical@gmail.com">
+            ✉️ zevamedical@gmail.com
+          </a>
+
+        </div>
+
+      </div>
+
+      <img
+        src="moh.png"
+        alt="Ministry of Health Logo"
+        class="logo"
+      >
+
+    </div>
+
+    <nav>
+
+      <ul>
+
+        <li>
+          <a href="#home">Home</a>
+        </li>
+
+        <li>
+          <a href="#services">Services</a>
+        </li>
+
+        <li>
+          <a href="#about">About Us</a>
+        </li>
+
+        <li>
+          <a href="#contact">Contact</a>
+        </li>
+
+      </ul>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+  <div class="hero-content">
+
+    <h2>
+      Your Health,<br>
+      <span>Our Priority.</span>
+    </h2>
+
+    <p>
+      Welcome to Zeva Medical Centre. We are committed
+      to providing safe, affordable and quality healthcare
+      services to our patients in a caring and professional
+      environment.
+    </p>
+
+    <div class="buttons">
+
+      <!-- REGISTRATION BUTTON -->
+
+      <a
+        href="register.html"
+        class="btn btn-yellow"
+        onclick="showRegistration()"
+      >
+        📝 Patient Registration
+      </a>
+
+      <!-- DOWNLOAD FORM BUTTON -->
+
+      <button
+        type="button"
+        class="btn btn-white"
+        onclick="downloadRegistrationForm()"
+      >
+        ⬇️ Download Registration Form
+      </button>
+
+      <!-- EXISTING INPATIENT BUTTON -->
+
+      <a
+        href="inpatient.html"
+        class="btn btn-yellow"
+      >
+        🛏️ Inpatient Services
+      </a>
+
+      <!-- EXISTING OUTPATIENT BUTTON -->
+
+      <a
+        href="outpatient.html"
+        class="btn btn-white"
+      >
+        🩺 Outpatient Services
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= QUICK SERVICES ================= -->
+
+<div class="quick-services">
+
+  <div class="quick-card">
+
+    <div class="icon">🚑</div>
+
+    <h3>Emergency Care</h3>
+
+    <p>
+      Professional emergency medical care
+      when you need it most.
+    </p>
+
+  </div>
+
+  <div class="quick-card">
+
+    <div class="icon">👨‍⚕️</div>
+
+    <h3>Qualified Doctors</h3>
+
+    <p>
+      Experienced healthcare professionals
+      dedicated to your wellbeing.
+    </p>
+
+  </div>
+
+  <div class="quick-card">
+
+    <div class="icon">❤️</div>
+
+    <h3>Patient Focused</h3>
+
+    <p>
+      Compassionate healthcare designed
+      around every patient's needs.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section
+  class="services"
+  id="services"
+>
+
+  <div class="section-container">
+
+    <div class="section-title">
+
+      <h2>Our Medical Services</h2>
+
+      <div class="line"></div>
+
+      <p>
+        Comprehensive healthcare services
+        under one roof.
+      </p>
+
+    </div>
+
+    <div class="service-grid">
+
+      <div class="service-card">
+
+        <div class="service-icon">🩺</div>
+
+        <h3>Outpatient Care</h3>
+
+        <p>
+          Medical consultations, diagnosis,
+          treatment and follow-up services
+          for patients who do not require
+          admission.
+        </p>
+
+      </div>
+
+      <div class="service-card">
+
+        <div class="service-icon">🛏️</div>
+
+        <h3>Inpatient Care</h3>
+
+        <p>
+          Comfortable inpatient facilities
+          with professional nursing and
+          medical care throughout your stay.
+        </p>
+
+      </div>
+
+      <div class="service-card">
+
+        <div class="service-icon">💊</div>
+
+        <h3>Pharmacy</h3>
+
+        <p>
+          Convenient access to prescribed
+          medicines and professional
+          pharmaceutical guidance.
+        </p>
+
+      </div>
+
+      <div class="service-card">
+
+        <div class="service-icon">🔬</div>
+
+        <h3>Laboratory</h3>
+
+        <p>
+          Reliable laboratory investigations
+          to support accurate diagnosis
+          and treatment.
+        </p>
+
+      </div>
+
+      <div class="service-card">
+
+        <div class="service-icon">👶</div>
+
+        <h3>Maternal & Child Health</h3>
+
+        <p>
+          Dedicated healthcare services
+          supporting mothers, babies
+          and children.
+        </p>
+
+      </div>
+
+      <div class="service-card">
+
+        <div class="service-icon">🚨</div>
+
+        <h3>Emergency Services</h3>
+
+        <p>
+          Prompt medical attention for
+          urgent and emergency healthcare
+          needs.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+  <div class="section-container">
+
+    <div class="about">
+
+      <div class="about-image"></div>
+
+      <div>
+
+        <h2>
+          About Zeva Medical Centre
+        </h2>
+
+        <p>
+          Zeva Medical Centre is committed
+          to delivering accessible, quality
+          and patient-centred healthcare
+          services.
+        </p>
+
+        <br>
+
+        <p>
+          Our team works together to provide
+          a welcoming environment where
+          patients receive professional
+          medical attention, dignity and
+          compassionate care.
+        </p>
+
+        <br>
+
+        <a
+          href="#contact"
+          class="btn btn-yellow"
+        >
+          Contact Us
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PATIENT REGISTRATION ================= -->
+
+<section
+  class="registration-section"
+  id="registration"
+>
+
+  <div class="registration-card">
+
+    <h2>
+      ZEVA MEDICAL CENTRE PATIENT REGISTRATION
+    </h2>
+
+    <p class="registration-subtitle">
+      Reception Patient Registration & Clinical Record
+    </p>
+
+    <p style="text-align:center;margin-bottom:20px;">
+      P.O. Box 1722-40200 |
+      Phone: 0708534991 |
+      Email: zevamedical@gmail.com
+    </p>
+
+    <form id="patientRegistrationForm">
+
+      <div class="section-title">
+
+        <h2>Patient Registration Details</h2>
+
+        <div class="line"></div>
+
+      </div>
+
+      <div class="registration-grid">
+
+        <div class="registration-field">
+
+          <label>
+            Registration No.
+          </label>
+
+          <input
+            type="text"
+            id="regNo"
+            readonly
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Date of Registration *
+          </label>
+
+          <input
+            type="date"
+            id="registrationDate"
+            required
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            First Name *
+          </label>
+
+          <input
+            type="text"
+            id="firstName"
+            required
+            placeholder="First name"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Second Name *
+          </label>
+
+          <input
+            type="text"
+            id="secondName"
+            required
+            placeholder="Second name"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Middle Name
+          </label>
+
+          <input
+            type="text"
+            id="middleName"
+            placeholder="Middle name"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Age *
+          </label>
+
+          <input
+            type="number"
+            id="age"
+            min="0"
+            max="120"
+            required
+            placeholder="Age"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Sex *
+          </label>
+
+          <select
+            id="sex"
+            required
+          >
+
+            <option value="">
+              -- Select Sex --
+            </option>
+
+            <option value="Male">
+              Male
+            </option>
+
+            <option value="Female">
+              Female
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Village
+          </label>
+
+          <input
+            type="text"
+            id="village"
+            placeholder="Village"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Sub-location
+          </label>
+
+          <input
+            type="text"
+            id="subLocation"
+            placeholder="Sub-location"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Phone *
+          </label>
+
+          <input
+            type="tel"
+            id="phone"
+            required
+            placeholder="07XXXXXXXX"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            ID No.
+          </label>
+
+          <input
+            type="text"
+            id="idNo"
+            placeholder="National ID / Passport No."
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= VITAL SIGNS ================= -->
+
+      <div class="section-title" style="margin-top:30px;">
+
+        <h2>Vital Signs</h2>
+
+        <div class="line"></div>
+
+      </div>
+
+      <div class="registration-grid">
+
+        <div class="registration-field">
+
+          <label>
+            Weight (kg)
+          </label>
+
+          <input
+            type="number"
+            id="weight"
+            step="0.1"
+            min="0"
+            placeholder="e.g. 65.5"
+            oninput="calculateBMI()"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Height (cm)
+          </label>
+
+          <input
+            type="number"
+            id="height"
+            step="0.1"
+            min="0"
+            placeholder="e.g. 170"
+            oninput="calculateBMI()"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            Temperature (°C)
+          </label>
+
+          <input
+            type="number"
+            id="temperature"
+            step="0.1"
+            placeholder="e.g. 36.7"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            B.P.
+          </label>
+
+          <input
+            type="text"
+            id="bp"
+            placeholder="e.g. 120/80 mmHg"
+          >
+
+        </div>
+
+        <div class="registration-field">
+
+          <label>
+            BMI
+          </label>
+
+          <input
+            type="text"
+            id="bmi"
+            readonly
+            placeholder="Automatic BMI"
+          >
+
+          <div
+            class="bmi-status"
+            id="bmiStatus"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= DATES DETAILS TREATMENT ================= -->
+
+      <div class="section-title" style="margin-top:30px;">
+
+        <h2>
+          Dates, Details & Treatment
+        </h2>
+
+        <div class="line"></div>
+
+      </div>
+
+      <div class="registration-table-wrap">
+
+        <table
+          class="registration-table"
+          id="visitTable"
+        >
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Date
+              </th>
+
+              <th>
+                Details / Diagnosis / Complaint
+              </th>
+
+              <th>
+                Treatment / Medication / Advice
+              </th>
+
+              <th class="no-print">
+                Action
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="visitBody">
+
+            <tr>
+
+              <td>
+
+                <input
+                  type="date"
+                  class="visit-date"
+                >
+
+              </td>
+
+              <td>
+
+                <textarea
+                  class="visit-details"
+                  placeholder="Enter details, diagnosis or complaint"
+                ></textarea>
+
+              </td>
+
+              <td>
+
+                <textarea
+                  class="visit-treatment"
+                  placeholder="Enter treatment, medication or advice"
+                ></textarea>
+
+              </td>
+
+              <td class="no-print">
+
+                <button
+                  type="button"
+                  class="reg-btn reg-danger"
+                  onclick="removeVisit(this)"
+                >
+                  Remove
+                </button>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- ================= FORM BUTTONS ================= -->
+
+      <div class="registration-actions no-print">
+
+        <button
+          type="button"
+          class="reg-btn reg-primary"
+          onclick="addVisit()"
+        >
+          + Add Date / Treatment
+        </button>
+
+        <button
+          type="button"
+          class="reg-btn reg-success"
+          onclick="savePatient()"
+        >
+          💾 Save Registration
+        </button>
+
+        <button
+          type="button"
+          class="reg-btn reg-primary"
+          onclick="printRegistration()"
+        >
+          🖨️ Print Registration
+        </button>
+
+        <button
+          type="button"
+          class="reg-btn reg-gray"
+          onclick="downloadRegistrationForm()"
+        >
+          ⬇️ Download Form
+        </button>
+
+        <button
+          type="button"
+          class="reg-btn reg-gray"
+          onclick="newPatient()"
+        >
+          + New Patient
+        </button>
+
+        <button
+          type="button"
+          class="reg-btn reg-danger"
+          onclick="hideRegistration()"
+        >
+          Close
+        </button>
+
+      </div>
+
+    </form>
+
+
+    <!-- ================= SAVED PATIENTS ================= -->
+
+    <div class="saved-patients no-print">
+
+      <div class="section-title">
+
+        <h2>
+          Saved Patients
+        </h2>
+
+        <div class="line"></div>
+
+      </div>
+
+      <input
+        type="text"
+        id="patientSearch"
+        placeholder="Search by name, registration number, phone or ID..."
+        oninput="searchPatients()"
+        style="
+          width:100%;
+          padding:10px;
+          border:1px solid #ccc;
+          border-radius:6px;
+        "
+      >
+
+      <div
+        id="savedPatientsList"
+        style="margin-top:12px;"
+      ></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section
+  class="contact"
+  id="contact"
+>
+
+  <div class="section-container">
+
+    <div class="section-title">
+
+      <h2>
+        Contact Zeva Medical Centre
+      </h2>
+
+      <div class="line"></div>
+
+    </div>
+
+    <div class="contact-grid">
+
+      <div class="contact-card">
+
+        <h3>
+          📍 Location
+        </h3>
+
+        <p>
+          Kegogi<br>
+          Kenya
+        </p>
+
+      </div>
+
+      <div class="contact-card">
+
+        <h3>
+          📞 Phone
+        </h3>
+
+        <p>
+
+          <a href="tel:0708534991">
+            0708534991
+          </a>
+
+        </p>
+
+      </div>
+
+      <div class="contact-card">
+
+        <h3>
+          ✉️ Email
+        </h3>
+
+        <p>
+
+          <a href="mailto:zevamedical@gmail.com">
+            zevamedical@gmail.com
+          </a>
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+  <p>
+    © 2026
+    <strong>Zeva Medical Centre</strong>.
+  </p>
+
+  <p>
+    Quality Healthcare • Compassion • Excellence
+  </p>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+/* ================= DATE ================= */
+
+function todayDate() {
+
+  const d = new Date();
+
+  return d.getFullYear() + "-" +
+    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    String(d.getDate()).padStart(2, "0");
+
+}
+
+
+/* ================= SHOW REGISTRATION ================= */
+
+function showRegistration() {
+
+  const section =
+    document.getElementById("registration");
+
+  section.style.display = "block";
+
+  section.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+}
+
+
+/* ================= HIDE REGISTRATION ================= */
+
+function hideRegistration() {
+
+  document.getElementById("registration").style.display =
+    "none";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* ================= REGISTRATION NUMBER ================= */
+
+function getPatients() {
+
+  return JSON.parse(
+    localStorage.getItem("zevaPatients") || "[]"
+  );
+
+}
+
+
+function savePatients(patients) {
+
+  localStorage.setItem(
+    "zevaPatients",
+    JSON.stringify(patients)
+  );
+
+}
+
+
+function generateRegistrationNumber() {
+
+  const patients = getPatients();
+
+  let number = patients.length + 1;
+
+  document.getElementById("regNo").value =
+    "ZMC-" +
+    new Date().getFullYear() +
+    "-" +
+    String(number).padStart(5, "0");
+
+}
+
+
+/* ================= BMI ================= */
+
+function calculateBMI() {
+
+  const weight =
+    parseFloat(
+      document.getElementById("weight").value
+    );
+
+  const height =
+    parseFloat(
+      document.getElementById("height").value
+    );
+
+  const bmi =
+    document.getElementById("bmi");
+
+  const status =
+    document.getElementById("bmiStatus");
+
+
+  if (
+    !weight ||
+    !height ||
+    height <= 0
+  ) {
+
+    bmi.value = "";
+
+    status.textContent = "";
+
+    return;
+
+  }
+
+
+  const value =
+    weight /
+    Math.pow(height / 100, 2);
+
+
+  bmi.value =
+    value.toFixed(1);
+
+
+  if (value < 18.5) {
+
+    status.textContent =
+      "Underweight";
+
+  }
+
+  else if (value < 25) {
+
+    status.textContent =
+      "Normal weight";
+
+  }
+
+  else if (value < 30) {
+
+    status.textContent =
+      "Overweight";
+
+  }
+
+  else {
+
+    status.textContent =
+      "Obesity";
+
+  }
+
+}
+
+
+/* ================= ADD VISIT ================= */
+
+function addVisit() {
+
+  const tbody =
+    document.getElementById("visitBody");
+
+  const row =
+    document.createElement("tr");
+
+
+  row.innerHTML = `
+
+    <td>
+
+      <input
+        type="date"
+        class="visit-date"
+        value="${todayDate()}"
+      >
+
+    </td>
+
+    <td>
+
+      <textarea
+        class="visit-details"
+        placeholder="Enter details, diagnosis or complaint"
+      ></textarea>
+
+    </td>
+
+    <td>
+
+      <textarea
+        class="visit-treatment"
+        placeholder="Enter treatment, medication or advice"
+      ></textarea>
+
+    </td>
+
+    <td class="no-print">
+
+      <button
+        type="button"
+        class="reg-btn reg-danger"
+        onclick="removeVisit(this)"
+      >
+        Remove
+      </button>
+
+    </td>
+
+  `;
+
+
+  tbody.appendChild(row);
+
+}
+
+
+/* ================= REMOVE VISIT ================= */
+
+function removeVisit(button) {
+
+  const tbody =
+    document.getElementById("visitBody");
+
+
+  if (tbody.rows.length <= 1) {
+
+    alert(
+      "At least one visit row must remain."
+    );
+
+    return;
+
+  }
+
+
+  button
+    .closest("tr")
+    .remove();
+
+}
+
+
+/* ================= GET VISITS ================= */
+
+function getVisits() {
+
+  return Array
+    .from(
+      document.querySelectorAll(
+        "#visitBody tr"
+      )
+    )
+    .map(function(row) {
+
+      return {
+
+        date:
+          row.querySelector(
+            ".visit-date"
+          ).value,
+
+        details:
+          row.querySelector(
+            ".visit-details"
+          ).value,
+
+        treatment:
+          row.querySelector(
+            ".visit-treatment"
+          ).value
+
+      };
+
+    });
+
+}
+
+
+/* ================= SAVE PATIENT ================= */
+
+function savePatient() {
+
+  const form =
+    document.getElementById(
+      "patientRegistrationForm"
+    );
+
+
+  if (!form.checkValidity()) {
+
+    form.reportValidity();
+
+    return;
+
+  }
+
+
+  const patient = {
+
+    regNo:
+      document.getElementById(
+        "regNo"
+      ).value,
+
+    registrationDate:
+      document.getElementById(
+        "registrationDate"
+      ).value,
+
+    firstName:
+      document.getElementById(
+        "firstName"
+      ).value.trim(),
+
+    secondName:
+      document.getElementById(
+        "secondName"
+      ).value.trim(),
+
+    middleName:
+      document.getElementById(
+        "middleName"
+      ).value.trim(),
+
+    age:
+      document.getElementById(
+        "age"
+      ).value,
+
+    sex:
+      document.getElementById(
+        "sex"
+      ).value,
+
+    village:
+      document.getElementById(
+        "village"
+      ).value.trim(),
+
+    subLocation:
+      document.getElementById(
+        "subLocation"
+      ).value.trim(),
+
+    phone:
+      document.getElementById(
+        "phone"
+      ).value.trim(),
+
+    idNo:
+      document.getElementById(
+        "idNo"
+      ).value.trim(),
+
+    weight:
+      document.getElementById(
+        "weight"
+      ).value,
+
+    height:
+      document.getElementById(
+        "height"
+      ).value,
+
+    temperature:
+      document.getElementById(
+        "temperature"
+      ).value,
+
+    bp:
+      document.getElementById(
+        "bp"
+      ).value.trim(),
+
+    bmi:
+      document.getElementById(
+        "bmi"
+      ).value,
+
+    bmiStatus:
+      document.getElementById(
+        "bmiStatus"
+      ).textContent,
+
+    visits:
+      getVisits(),
+
+    savedAt:
+      new Date().toISOString()
+
+  };
+
+
+  const patients =
+    getPatients();
+
+
+  const existing =
+    patients.findIndex(
+      function(p) {
+
+        return p.regNo ===
+          patient.regNo;
+
+      }
+    );
+
+
+  if (existing >= 0) {
+
+    patients[existing] =
+      patient;
+
+  }
+
+  else {
+
+    patients.push(
+      patient
+    );
+
+  }
+
+
+  savePatients(
+    patients
+  );
+
+
+  renderSavedPatients();
+
+
+  alert(
+    "Patient registration saved successfully.\n\nRegistration No: " +
+    patient.regNo
+  );
+
+}
+
+
+/* ================= SAVED PATIENTS ================= */
+
+function renderSavedPatients(search) {
+
+  search =
+    search || "";
+
+
+  const box =
+    document.getElementById(
+      "savedPatientsList"
+    );
+
+
+  const term =
+    search.toLowerCase();
+
+
+  const patients =
+    getPatients().filter(
+      function(patient) {
+
+        const text = [
+
+          patient.regNo,
+          patient.firstName,
+          patient.secondName,
+          patient.middleName,
+          patient.phone,
+          patient.idNo
+
+        ]
+        .join(" ")
+        .toLowerCase();
+
+
+        return text.includes(
+          term
+        );
+
+      }
+    );
+
+
+  box.innerHTML = "";
+
+
+  if (!patients.length) {
+
+    box.innerHTML =
+      "<p>No saved patient records found.</p>";
+
+    return;
+
+  }
+
+
+  patients.forEach(
+    function(patient) {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "saved-patient-card";
+
+
+      const name = [
+
+        patient.firstName,
+        patient.secondName,
+        patient.middleName
+
+      ]
+      .filter(Boolean)
+      .join(" ");
+
+
+      card.innerHTML = `
+
+        <strong>
+          ${escapeHTML(name)}
+        </strong>
+
+        <br>
+
+        Registration No:
+        ${escapeHTML(patient.regNo)}
+
+        <br>
+
+        Phone:
+        ${escapeHTML(patient.phone || "")}
+
+        <br>
+
+        ID No:
+        ${escapeHTML(patient.idNo || "")}
+
+        <br><br>
+
+        <button
+          type="button"
+          class="reg-btn reg-primary"
+          onclick="loadPatient('${escapeJS(patient.regNo)}')"
+        >
+          Open
+        </button>
+
+        <button
+          type="button"
+          class="reg-btn reg-danger"
+          onclick="deletePatient('${escapeJS(patient.regNo)}')"
+        >
+          Delete
+        </button>
+
+      `;
+
+
+      box.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* ================= SEARCH ================= */
+
+function searchPatients() {
+
+  renderSavedPatients(
+    document.getElementById(
+      "patientSearch"
+    ).value
+  );
+
+}
+
+
+/* ================= LOAD PATIENT ================= */
+
+function loadPatient(regNo) {
+
+  const patient =
+    getPatients().find(
+      function(p) {
+
+        return p.regNo ===
+          regNo;
+
+      }
+    );
+
+
+  if (!patient) {
+
+    alert(
+      "Patient record not found."
+    );
+
+    return;
+
+  }
+
+
+  showRegistration();
+
+
+  const fields = {
+
+    regNo:
+      patient.regNo,
+
+    registrationDate:
+      patient.registrationDate,
+
+    firstName:
+      patient.firstName,
+
+    secondName:
+      patient.secondName,
+
+    middleName:
+      patient.middleName,
+
+    age:
+      patient.age,
+
+    sex:
+      patient.sex,
+
+    village:
+      patient.village,
+
+    subLocation:
+      patient.subLocation,
+
+    phone:
+      patient.phone,
+
+    idNo:
+      patient.idNo,
+
+    weight:
+      patient.weight,
+
+    height:
+      patient.height,
+
+    temperature:
+      patient.temperature,
+
+    bp:
+      patient.bp,
+
+    bmi:
+      patient.bmi
+
+  };
+
+
+  Object.keys(fields)
+    .forEach(
+      function(id) {
+
+        const element =
+          document.getElementById(
+            id
+          );
+
+
+        if (element) {
+
+          element.value =
+            fields[id] || "";
+
+        }
+
+      }
+    );
+
+
+  document.getElementById(
+    "bmiStatus"
+  ).textContent =
+    patient.bmiStatus || "";
+
+
+  const tbody =
+    document.getElementById(
+      "visitBody"
+    );
+
+
+  tbody.innerHTML = "";
+
+
+  if (
+    patient.visits &&
+    patient.visits.length
+  ) {
+
+    patient.visits.forEach(
+      function(visit) {
+
+        const row =
+          document.createElement(
+            "tr"
+          );
+
+
+        row.innerHTML = `
+
+          <td>
+
+            <input
+              type="date"
+              class="visit-date"
+              value="${escapeHTML(visit.date || "")}"
+            >
+
+          </td>
+
+          <td>
+
+            <textarea
+              class="visit-details"
+            >${escapeHTML(visit.details || "")}</textarea>
+
+          </td>
+
+          <td>
+
+            <textarea
+              class="visit-treatment"
+            >${escapeHTML(visit.treatment || "")}</textarea>
+
+          </td>
+
+          <td class="no-print">
+
+            <button
+              type="button"
+              class="reg-btn reg-danger"
+              onclick="removeVisit(this)"
+            >
+              Remove
+            </button>
+
+          </td>
+
+        `;
+
+
+        tbody.appendChild(
+          row
+        );
+
+      }
+    );
+
+  }
+
+  else {
+
+    addVisit();
+
+  }
+
+}
+
+
+/* ================= DELETE PATIENT ================= */
+
+function deletePatient(regNo) {
+
+  if (
+    !confirm(
+      "Delete this patient record?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  savePatients(
+    getPatients().filter(
+      function(patient) {
+
+        return patient.regNo !==
+          regNo;
+
+      }
+    )
+  );
+
+
+  renderSavedPatients();
+
+}
+
+
+/* ================= NEW PATIENT ================= */
+
+function newPatient() {
+
+  document
+    .getElementById(
+      "patientRegistrationForm"
+    )
+    .reset();
+
+
+  document.getElementById(
+    "registrationDate"
+  ).value =
+    todayDate();
+
+
+  document.getElementById(
+    "bmi"
+  ).value = "";
+
+
+  document.getElementById(
+    "bmiStatus"
+  ).textContent = "";
+
+
+  document.getElementById(
+    "visitBody"
+  ).innerHTML = `
+
+    <tr>
+
+      <td>
+
+        <input
+          type="date"
+          class="visit-date"
+          value="${todayDate()}"
+        >
+
+      </td>
+
+      <td>
+
+        <textarea
+          class="visit-details"
+          placeholder="Enter details, diagnosis or complaint"
+        ></textarea>
+
+      </td>
+
+      <td>
+
+        <textarea
+          class="visit-treatment"
+          placeholder="Enter treatment, medication or advice"
+        ></textarea>
+
+      </td>
+
+      <td class="no-print">
+
+        <button
+          type="button"
+          class="reg-btn reg-danger"
+          onclick="removeVisit(this)"
+        >
+          Remove
+        </button>
+
+      </td>
+
+    </tr>
+
+  `;
+
+
+  generateRegistrationNumber();
+
+  showRegistration();
+
+}
+
+
+/* ================= PRINT ================= */
+
+function printRegistration() {
+
+  const form =
+    document.getElementById(
+      "patientRegistrationForm"
+    );
+
+
+  if (!form.checkValidity()) {
+
+    form.reportValidity();
+
+    return;
+
+  }
+
+
+  window.print();
+
+}
+
+
+/* ================= DOWNLOAD FORM ================= */
+
+function downloadRegistrationForm() {
+
+  const html = `<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+  Zeva Medical Centre - Patient Registration
+</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #eef5f9;
+  color: #222;
+}
+
+.form {
+  max-width: 1100px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+}
+
+h1 {
+  text-align: center;
+  color: #0066b3;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.title {
+  background: #0066b3;
+  color: white;
+  padding: 9px;
+  margin: 20px 0 12px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+textarea {
+  min-height: 65px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #aaa;
+  padding: 8px;
+  vertical-align: top;
+}
+
+th {
+  background: #0066b3;
+  color: white;
+  text-align: left;
+}
+
+button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 5px;
+  background: #0066b3;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+@media(max-width:800px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(max-width:550px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+    padding: 0;
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="form">
+
+<h1>
+  ZEVA MEDICAL CENTRE
+</h1>
+
+<p class="subtitle">
+  Patient Registration & Clinical Record
+</p>
+
+<p style="text-align:center;">
+  P.O. Box 1722-40200 |
+  Phone: 0708534991 |
+  Email: zevamedical@gmail.com
+</p>
+
+<div class="title">
+  PATIENT REGISTRATION DETAILS
+</div>
+
+<div class="grid">
+
+<div>
+<label>Registration No.</label>
+<input type="text">
+</div>
+
+<div>
+<label>Date of Registration</label>
+<input type="date">
+</div>
+
+<div>
+<label>First Name</label>
+<input type="text">
+</div>
+
+<div>
+<label>Second Name</label>
+<input type="text">
+</div>
+
+<div>
+<label>Middle Name</label>
+<input type="text">
+</div>
+
+<div>
+<label>Age</label>
+<input type="number">
+</div>
+
+<div>
+<label>Sex</label>
+<select>
+<option></option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+</div>
+
+<div>
+<label>Village</label>
+<input type="text">
+</div>
+
+<div>
+<label>Sub-location</label>
+<input type="text">
+</div>
+
+<div>
+<label>Phone</label>
+<input type="tel">
+</div>
+
+<div>
+<label>ID No.</label>
+<input type="text">
+</div>
+
+</div>
+
+<div class="title">
+  VITAL SIGNS
+</div>
+
+<div class="grid">
+
+<div>
+<label>Weight (kg)</label>
+<input type="number">
+</div>
+
+<div>
+<label>Height (cm)</label>
+<input type="number">
+</div>
+
+<div>
+<label>Temperature (°C)</label>
+<input type="number">
+</div>
+
+<div>
+<label>B.P.</label>
+<input type="text" placeholder="120/80">
+</div>
+
+<div>
+<label>BMI</label>
+<input type="text">
+</div>
+
+</div>
+
+<div class="title">
+  DATES, DETAILS & TREATMENT
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Date
+</th>
+
+<th>
+Details / Diagnosis / Complaint
+</th>
+
+<th>
+Treatment / Medication / Advice
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+<input type="date">
+</td>
+
+<td>
+<textarea></textarea>
+</td>
+
+<td>
+<textarea></textarea>
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+<input type="date">
+</td>
+
+<td>
+<textarea></textarea>
+</td>
+
+<td>
+<textarea></textarea>
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+<input type="date">
+</td>
+
+<td>
+<textarea></textarea>
+</td>
+
+<td>
+<textarea></textarea>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button
+  type="button"
+  onclick="window.print()"
+>
+Print Form
+</button>
+
+</div>
+
+</body>
+
+</html>`;
+
+
+  const blob =
+    new Blob(
+      [html],
+      {
+        type:
+          "text/html;charset=utf-8"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const link =
+    document.createElement(
+      "a"
+    );
+
+
+  link.href =
+    url;
+
+
+  link.download =
+    "Zeva_Medical_Centre_Patient_Registration_Form.html";
+
+
+  document.body.appendChild(
+    link
+  );
+
+
+  link.click();
+
+
+  link.remove();
+
+
+  setTimeout(
+    function() {
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    },
+    1000
+  );
+
+}
+
+
+/* ================= ESCAPE ================= */
+
+function escapeHTML(value) {
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+function escapeJS(value) {
+
+  return String(value)
+
+    .replace(
+      /\\/g,
+      "\\\\"
+    )
+
+    .replace(
+      /'/g,
+      "\\'"
+    );
+
+}
+
+
+/* ================= STARTUP ================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    const date =
+      document.getElementById(
+        "registrationDate"
+      );
+
+
+    if (date) {
+
+      date.value =
+        todayDate();
+
+    }
+
+
+    const visitDate =
+      document.querySelector(
+        ".visit-date"
+      );
+
+
+    if (visitDate) {
+
+      visitDate.value =
+        todayDate();
+
+    }
+
+
+    generateRegistrationNumber();
+
+    renderSavedPatients();
+
+  }
+);
+
+</script>
+
+</body>
+
+</html>
